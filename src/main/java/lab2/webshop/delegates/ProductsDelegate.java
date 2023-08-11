@@ -1,4 +1,4 @@
-package lab2.webshop.controllers;
+package lab2.webshop.delegates;
 
 import lab2.webshop.openapi.api.ProductsApiDelegate;
 import lab2.webshop.openapi.model.Product;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomProductsDelegate implements ProductsApiDelegate {
+public class ProductsDelegate implements ProductsApiDelegate {
 
-    public CustomProductsDelegate(){}
+    public ProductsDelegate(){}
 
     @Override
     public ResponseEntity<List<Product>> getProducts(String name){

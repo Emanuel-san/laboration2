@@ -1,0 +1,313 @@
+openapi: 3.0.1
+info:
+  title: Webshop API
+  description: >
+    A simple webshop REST API for storing resources regarding products, cart contents and orders.
+  version: 1.0.0
+paths:
+  ###################### /products
+  /products:
+    get:
+      tags:
+        - Products
+      operationId: getProducts
+      summary: Retrieve all products
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Filter products by name
+      responses:
+        200:
+          description: Products response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - Products
+      operationId: createProduct
+      summary: Add a new product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /products/{product-id}:
+    get:
+      tags:
+        - Products
+      operationId: getProduct
+      summary: Retrieve a specific product
+      parameters:
+        - in: path
+          name: product-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    put:
+      tags:
+        - Products
+      summary: Update an existing product
+      operationId: updateProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      parameters:
+        - in: path
+          name: product-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      tags:
+        - Products
+      summary: Delete a product
+      operationId: deleteProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      parameters:
+        - in: path
+          name: product-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  ###################### /shopping-carts
+  /shopping-carts:
+    get:
+      tags:
+        - Shopping-Carts
+      operationId: getShoppingCarts
+      summary: Retrieve all shopping carts
+      responses:
+        200:
+          description: Shopping carts response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartSummary'
+    post:
+      tags:
+        - Shopping-Carts
+      operationId: createShoppingCart
+      summary: Create a new shopping cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shopping-cart-entity'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartSummary'
+  /shopping-carts/{shopping-cart-id}:
+    get:
+      tags:
+        - Shopping-Carts
+      operationId: getShoppingCart
+      summary: Retrieve a specific shopping cart
+      parameters:
+        - in: path
+          name: shopping-cart-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartSummary'
+
+    put:
+      tags:
+        - Shopping-Carts
+      summary: Update an existing shopping cart
+      operationId: updateShoppingCart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shopping-cart'
+        required: true
+      parameters:
+        - in: path
+          name: shopping-cart-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartSummary'
+  ###################### /orders
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get all exisisting orders
+      operationId: getOrders
+      responses:
+        200:
+          description: Orders response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+  /orders/{shopping-cart-id}:
+    post:
+      tags:
+        - Orders
+      summary: Create a new order of an existing shopping cart
+      operationId: createOrder
+      parameters:
+        - in: path
+          name: shopping-cart-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      description: Representation of a Product resource
+      required:
+        - productId
+        - name
+        - price
+        - description
+        - image
+      properties:
+        productId:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        image:
+          type: string
+    Shopping-cart-entity:
+      type: object
+      description: Representation of a Shopping-cart resource
+      required:
+        - cartId
+      properties:
+        cartId:
+          type: string
+        productItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductItems'
+    Shopping-cart:
+      type: object
+      description: Representation of a Shopping-cart resource
+      properties:
+        productItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductItems'
+    ProductItems:
+      type: object
+      description: Representation of a Items in a cart
+      required:
+        - amount
+        - productId
+      properties:
+        amount:
+          type: number
+        productId:
+          type: string
+    CartSummary:
+      type: object
+      description: Total value summary of a cart
+      allOf:
+        - $ref: '#/components/schemas/Shopping-cart-entity'
+        - $ref: '#/components/schemas/TotalSummary'
+        - type: object
+    TotalSummary:
+      type: object
+      description: Total value summary
+      properties:
+        currency:
+          type: string
+        total:
+          type: number
+        vat:
+          type: number
+    Order:
+      type: object
+      description: Representation of an order resource
+      properties:
+        orderId:
+          type: string
+        paid:
+          type: boolean
+        productItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductItems'
+      allOf:
+        - $ref: '#/components/schemas/TotalSummary'

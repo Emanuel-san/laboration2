@@ -1,7 +1,11 @@
 package lab2.webshop.delegates;
 
+import lab2.webshop.document.ProductItem;
+import lab2.webshop.openapi.api.ProductsApi;
 import lab2.webshop.openapi.api.ProductsApiDelegate;
+import lab2.webshop.openapi.model.ErrorResponse;
 import lab2.webshop.openapi.model.Product;
+import lab2.webshop.repository.ProductRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +16,13 @@ import java.util.List;
 @Component
 public class ProductsDelegate implements ProductsApiDelegate {
 
-    public ProductsDelegate(){}
-
+    ProductRepository productItemRepo;
+    public ProductsDelegate(ProductRepository productItemRepo){
+        this.productItemRepo = productItemRepo;
+    }
     @Override
     public ResponseEntity<List<Product>> getProducts(String name){
-        List<Product> list = new ArrayList<>();
-        Product prd = new Product("PRD-1", name, BigDecimal.valueOf(32.2), "A magical product", "imageurl");
-        list.add(prd);
-
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(productItemRepo.findAll());
     }
 
     @Override
@@ -28,4 +30,12 @@ public class ProductsDelegate implements ProductsApiDelegate {
        return ResponseEntity.ok(product);
     }
 
+    @Override
+    public ResponseEntity<Product> getProduct(String productId){
+        Product product = productItemRepo.findItemByProductId(productId);
+        if(product == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(product);
+    }
 }

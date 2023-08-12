@@ -45,6 +45,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        400:
+          description: bad request response
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /products/{product-id}:
     get:
       tags:
@@ -64,6 +70,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        400:
+          description: bad request response
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       tags:
         - Products
@@ -88,6 +100,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        400:
+          description: bad request response
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       tags:
         - Products
@@ -112,6 +130,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        400:
+          description: bad request response
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   ###################### /shopping-carts
   /shopping-carts:
     get:
@@ -311,3 +335,11 @@ components:
             $ref: '#/components/schemas/ProductItems'
       allOf:
         - $ref: '#/components/schemas/TotalSummary'
+    ErrorResponse:
+      type: object
+      description: Represents a descriptive error response
+      properties:
+        error:
+          type: string
+        message:
+          type: string

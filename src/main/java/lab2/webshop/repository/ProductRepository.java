@@ -12,10 +12,6 @@ import java.util.List;
 public interface ProductRepository extends MongoRepository<ProductItem, String> {
 
     @Query("{productId:'?0'}")
-    Product findItemByProductId(String productId);
+    ProductItem findItemByProductId(String productId);
 
-    @Query
-    List<Product> getAllProducts();
-
-    long count();
 }

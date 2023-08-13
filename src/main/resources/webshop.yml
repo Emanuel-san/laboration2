@@ -48,7 +48,7 @@ paths:
         400:
           description: bad request response
           content:
-            aplication/json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   /products/{product-id}:
@@ -70,10 +70,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        400:
-          description: bad request response
+        404:
+          description: Response when specified product was not found
           content:
-            aplication/json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
@@ -100,10 +100,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        400:
-          description: bad request response
+        404:
+          description: Response when specified product was not found
           content:
-            aplication/json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
@@ -111,12 +111,6 @@ paths:
         - Products
       summary: Delete a product
       operationId: deleteProduct
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
-        required: true
       parameters:
         - in: path
           name: product-id
@@ -130,10 +124,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        400:
-          description: bad request response
+        404:
+          description: Response when specified product was not found
           content:
-            aplication/json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   ###################### /shopping-carts

@@ -1,21 +1,25 @@
 package lab2.webshop.delegates;
 
+import jakarta.validation.Validator;
 import lab2.webshop.exception.ProductNotFoundException;
-import lab2.webshop.openapi.api.ProductsApiDelegate;
+
+import lab2.webshop.openapi.api.ProductsApi;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.repository.ProductRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class ProductsDelegate implements ProductsApiDelegate {
+@Controller
+public class ProductsController implements ProductsApi {
 
     ProductRepository productItemRepo;
-    public ProductsDelegate(ProductRepository productItemRepo){
+    Validator validator;
+    public ProductsController(ProductRepository productItemRepo, Validator validator){
         this.productItemRepo = productItemRepo;
+        this.validator = validator;
     }
     @Override
     public ResponseEntity<List<Product>> getProducts(String name){
@@ -24,12 +28,13 @@ public class ProductsDelegate implements ProductsApiDelegate {
 
     @Override
     public ResponseEntity<Product> createProduct(Product product){
-       return ResponseEntity.ok(product);
+        productItemRepo.insert(product);
+        return ResponseEntity.ok(product);
     }
 
     @Override
     public ResponseEntity<Product> getProduct(String productId){
-        Product product = productItemRepo.findItemByProductId(productId);
+        final Product product = productItemRepo.findItemByProductId(productId);
         if(product == null) {
             throw new ProductNotFoundException(productId);
         }

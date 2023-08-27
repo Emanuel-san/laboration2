@@ -86,7 +86,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Product'
-        required: true
       parameters:
         - in: path
           name: product-id
@@ -249,22 +248,27 @@ components:
   schemas:
     Product:
       type: object
+      x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"products\")"
       description: Representation of a Product resource
       required:
         - productId
         - name
         - price
         - description
-        - image
       properties:
         productId:
           type: string
+          nullable: false
         name:
           type: string
+          nullable: false
         price:
           type: number
+          nullable: false
+          minimum: 0
         description:
           type: string
+          nullable: false
         image:
           type: string
     Shopping-cart-entity:

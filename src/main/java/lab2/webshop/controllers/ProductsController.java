@@ -1,4 +1,4 @@
-package lab2.webshop.delegates;
+package lab2.webshop.controllers;
 
 import jakarta.validation.Validator;
 import lab2.webshop.exception.ProductNotFoundException;

@@ -26,7 +26,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: '#/components/schemas/ProductEntity'
     post:
       tags:
         - Products
@@ -36,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductEntity'
         required: true
       responses:
         200:
@@ -44,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductEntity'
         400:
           description: bad request response
           content:
@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductEntity'
         404:
           description: Response when specified product was not found
           content:
@@ -86,6 +86,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Product'
+        required: true
       parameters:
         - in: path
           name: product-id
@@ -98,7 +99,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductEntity'
+        400:
+          description: Response when specified product was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Response when specified product was not found
           content:
@@ -122,7 +129,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductEntity'
         404:
           description: Response when specified product was not found
           content:
@@ -247,6 +254,19 @@ paths:
 components:
   schemas:
     Product:
+      type: object
+      description: Representation of a Product resource
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+          minimum: 0
+        description:
+          type: string
+        image:
+          type: string
+    ProductEntity:
       type: object
       x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"products\")"
       description: Representation of a Product resource

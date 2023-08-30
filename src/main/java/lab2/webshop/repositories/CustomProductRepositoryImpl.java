@@ -1,7 +1,7 @@
-package lab2.webshop.repository;
+package lab2.webshop.repositories;
 
 import com.mongodb.client.result.UpdateResult;
-import lab2.webshop.exception.ProductNotFoundException;
+import lab2.webshop.exceptions.ProductNotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
 import org.springframework.data.mongodb.core.MongoTemplate;

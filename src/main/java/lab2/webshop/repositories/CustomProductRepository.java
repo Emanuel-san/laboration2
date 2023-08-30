@@ -1,4 +1,4 @@
-package lab2.webshop.repository;
+package lab2.webshop.repositories;
 
 import lab2.webshop.openapi.model.Product;
 

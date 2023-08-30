@@ -46,7 +46,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductEntity'
         400:
-          description: bad request response
+          description: Response for bad request
           content:
             application/json:
               schema:
@@ -101,7 +101,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductEntity'
         400:
-          description: Response when specified product was not found
+          description: Response for bad request
           content:
             application/json:
               schema:

@@ -1,4 +1,4 @@
-package lab2.webshop.exception;
+package lab2.webshop.exceptions;
 
 import com.mongodb.MongoWriteException;
 import lab2.webshop.openapi.model.ErrorResponse;

@@ -1,4 +1,4 @@
-package lab2.webshop.exception;
+package lab2.webshop.exceptions;
 
 public class ProductNotFoundException extends RuntimeException{
     public ProductNotFoundException(String productId){

@@ -10,4 +10,7 @@ public interface ProductRepository extends MongoRepository<ProductEntity, String
 
     @Query("{productId:'?0'}")
     ProductEntity findItemByProductId(final String productId);
+
+    @Query(value = "{productId:'?0'}", delete = true)
+    ProductEntity deleteItemByProductId(final String productId);
 }

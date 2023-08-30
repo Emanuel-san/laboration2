@@ -16,26 +16,26 @@ import java.util.List;
 @Controller
 public class ProductsController implements ProductsApi {
 
-    final ProductRepository productItemRepo;
+    final ProductRepository productRepository;
     final Validator validator;
-    public ProductsController(ProductRepository productItemRepo, Validator validator){
-        this.productItemRepo = productItemRepo;
+    public ProductsController(ProductRepository productRepository, Validator validator){
+        this.productRepository = productRepository;
         this.validator = validator;
     }
     @Override
     public ResponseEntity<List<ProductEntity>> getProducts(String name){
-        return ResponseEntity.ok(new ArrayList<>(productItemRepo.findAll()));
+        return ResponseEntity.ok(new ArrayList<>(productRepository.findAll()));
     }
 
     @Override
     public ResponseEntity<ProductEntity> createProduct(ProductEntity productEntity){
-        productItemRepo.insert(productEntity);
+        productRepository.insert(productEntity);
         return ResponseEntity.ok(productEntity);
     }
 
     @Override
     public ResponseEntity<ProductEntity> getProduct(String productId){
-        final ProductEntity productEntity = productItemRepo.findItemByProductId(productId);
+        final ProductEntity productEntity = productRepository.findItemByProductId(productId);
         if(productEntity == null) {
             throw new ProductNotFoundException(productId);
         }
@@ -44,13 +44,17 @@ public class ProductsController implements ProductsApi {
 
     @Override
     public ResponseEntity<ProductEntity> updateProduct(String productId, Product product){
-        productItemRepo.updateProduct(productId, product);
-        final ProductEntity productEntity = productItemRepo.findItemByProductId(productId);
+        productRepository.updateProduct(productId, product);
+        final ProductEntity productEntity = productRepository.findItemByProductId(productId);
         return ResponseEntity.ok(productEntity);
     }
 
-//    @Override
-//    public ResponseEntity<Product> deleteProduct(String productId){
-//        return ResponseEntity.ok();
-//    }
+    @Override
+    public ResponseEntity<ProductEntity> deleteProduct(String productId){
+        ProductEntity productEntity = productRepository.deleteItemByProductId(productId);
+        if(productEntity == null) {
+            throw new ProductNotFoundException(productId);
+        }
+        return ResponseEntity.ok(productEntity);
+    }
 }

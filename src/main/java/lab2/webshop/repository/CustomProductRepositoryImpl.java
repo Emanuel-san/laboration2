@@ -1,6 +1,5 @@
 package lab2.webshop.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.result.UpdateResult;
 import lab2.webshop.exception.ProductNotFoundException;
 import lab2.webshop.openapi.model.Product;
@@ -45,7 +44,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     }
 
     private Map<String, Object> mapObjectFields(final Product product){
-        Map<String, Object> objectFields = new HashMap<>();
+        final Map<String, Object> objectFields = new HashMap<>();
         objectFields.put("name", product.getName());
         objectFields.put("price", product.getPrice());
         objectFields.put("description", product.getDescription());

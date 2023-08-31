@@ -4,6 +4,7 @@ import lab2.webshop.exceptions.ProductNotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,18 +14,13 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     final ProductRepository productRepository;
-
+    @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     @Override
     public List<ProductEntity> getProducts(String name) {
-        return new ArrayList<>(productRepository.findAll());
-    }
-
-    @Override
-    public List<ProductEntity> getProducts() {
         return new ArrayList<>(productRepository.findAll());
     }
 

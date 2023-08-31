@@ -1,10 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Webshop</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<p th:text="'Hello, ' + ${name} + '!'" />
-</body>
+  <head>
+    <title>Webshop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="'Product id: ' + ${product.getProductId()}" />
+    <p th:text="'name: ' + ${product.getName()}" />
+    <p th:text="'description: ' + ${product.getDescription()}" />
+    <p th:text="'price: ' + ${product.getPrice()}" />
+  </body>
 </html>

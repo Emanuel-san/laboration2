@@ -4,6 +4,7 @@ import com.mongodb.client.result.UpdateResult;
 import lab2.webshop.exceptions.ProductNotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -17,7 +18,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     final MongoTemplate mongoTemplate;
 
     int keyCounter;
-
     public CustomProductRepositoryImpl(final MongoTemplate template){
         this.mongoTemplate = template;
     }

@@ -1,7 +1,6 @@
 package lab2.webshop.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lab2.webshop.services.ProductService;
 import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

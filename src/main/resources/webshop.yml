@@ -151,25 +151,19 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CartSummary'
+                  $ref: '#/components/schemas/Shopping-cart-entity'
     post:
       tags:
         - Shopping-Carts
       operationId: createShoppingCart
       summary: Create a new shopping cart
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Shopping-cart-entity'
-        required: true
       responses:
         200:
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartSummary'
+                $ref: '#/components/schemas/Shopping-cart-entity'
   /shopping-carts/{shopping-cart-id}:
     get:
       tags:
@@ -188,7 +182,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartSummary'
+                $ref: '#/components/schemas/Shopping-cart-entity'
+        404:
+          description: Response when specified product was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
     put:
       tags:
@@ -293,11 +293,13 @@ components:
           type: string
     Shopping-cart-entity:
       type: object
+      x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"carts\")"
       description: Representation of a Shopping-cart resource
       required:
         - cartId
       properties:
         cartId:
+          nullable: false
           type: string
         productItems:
           type: array

@@ -1,10 +1,9 @@
 package lab2.webshop.repositories;
 
 import com.mongodb.client.result.UpdateResult;
-import lab2.webshop.exceptions.ProductNotFoundException;
+import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -38,7 +37,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         if(keyCounter > 0) {
             final UpdateResult result = mongoTemplate.updateFirst(query, update, ProductEntity.class);
             if (result.getMatchedCount() == 0) {
-                throw new ProductNotFoundException(productId);
+                throw new NotFoundException("No product found with ID: " + productId);
             }
         }
     }

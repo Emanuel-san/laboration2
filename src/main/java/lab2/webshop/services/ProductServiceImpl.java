@@ -1,6 +1,6 @@
 package lab2.webshop.services;
 
-import lab2.webshop.exceptions.ProductNotFoundException;
+import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.repositories.ProductRepository;
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductEntity getProduct(String productId) {
         final ProductEntity productEntity = productRepository.findItemByProductId(productId);
         if(productEntity == null) {
-            throw new ProductNotFoundException(productId);
+            throw new NotFoundException("No product found with ID: " + productId);
         }
         return productEntity;
     }
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductEntity deleteProduct(String productId) {
         ProductEntity productEntity = productRepository.deleteItemByProductId(productId);
         if(productEntity == null) {
-            throw new ProductNotFoundException(productId);
+            throw new NotFoundException("No product found with ID: " + productId);
         }
         return productEntity;
     }

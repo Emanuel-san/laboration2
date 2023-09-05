@@ -19,8 +19,8 @@ public class WebshopExceptionHandler {
     private static final String MODEL_VALIDATION_FAILED = "invalid arguments";
     private static final String PARSE_ERROR = "parse error";
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleProductNotFound(ProductNotFoundException e){
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException e){
         final ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setError(NOT_FOUND);
         errorResponse.setMessage(e.getMessage());

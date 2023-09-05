@@ -4,6 +4,8 @@ import lab2.webshop.openapi.api.ShoppingCartsApi;
 import lab2.webshop.openapi.model.CartSummary;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.openapi.model.ShoppingCartEntity;
+import lab2.webshop.services.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -13,17 +15,22 @@ import java.util.List;
 @Controller
 public class ShoppingCartController implements ShoppingCartsApi {
 
-    @Override
-    public ResponseEntity<CartSummary> createShoppingCart(ShoppingCartEntity shoppingCartEntity) {
-        return ResponseEntity.ok(new CartSummary());
+    ShoppingCartService shoppingCartService;
+
+    @Autowired
+    public ShoppingCartController(ShoppingCartService shoppingCartService){
+        this.shoppingCartService = shoppingCartService;
     }
     @Override
-    public ResponseEntity<CartSummary> getShoppingCart(String productId) {
-        System.out.println(productId);
-        return ResponseEntity.ok(new CartSummary());
+    public ResponseEntity<ShoppingCartEntity> createShoppingCart() {
+        return ResponseEntity.ok(shoppingCartService.createShoppingCart());
     }
     @Override
-    public ResponseEntity<List<CartSummary>> getShoppingCarts() {
+    public ResponseEntity<ShoppingCartEntity> getShoppingCart(String shoppingCartId) {
+        return ResponseEntity.ok(shoppingCartService.getShoppingCart(shoppingCartId));
+    }
+    @Override
+    public ResponseEntity<List<ShoppingCartEntity>> getShoppingCarts() {
         return ResponseEntity.ok(new ArrayList<>());
     }
     @Override

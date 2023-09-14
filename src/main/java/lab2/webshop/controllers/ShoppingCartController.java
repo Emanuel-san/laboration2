@@ -15,6 +15,7 @@ import java.util.List;
 @Controller
 public class ShoppingCartController implements ShoppingCartsApi {
 
+    /** Service bean for all shopping cart related */
     ShoppingCartService shoppingCartService;
 
     @Autowired
@@ -35,6 +36,7 @@ public class ShoppingCartController implements ShoppingCartsApi {
     }
     @Override
     public ResponseEntity<CartSummary> updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart) {
+        // TODO - How to handle this logic? Should it just be add product?
         return ResponseEntity.ok(new CartSummary());
     }
 }

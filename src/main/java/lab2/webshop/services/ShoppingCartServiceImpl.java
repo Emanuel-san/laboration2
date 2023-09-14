@@ -41,11 +41,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<CartSummary> getShoppingCarts() {
+        // TODO - remove?
         return null;
     }
 
     @Override
     public CartSummary updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart) {
+        // TODO - see controller
         return null;
     }
 }

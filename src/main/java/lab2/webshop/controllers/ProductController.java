@@ -14,6 +14,7 @@ import java.util.List;
 @Controller
 public class ProductController implements ProductsApi {
 
+    /** Service bean for all products related */
     final ProductService productService;
 
     /** Validates objects created from incoming requests */

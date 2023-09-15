@@ -321,15 +321,17 @@ components:
       x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"carts\")"
       description: Representation of a Shopping-cart resource
       required:
-        - cartId
+        - sessionId
       properties:
-        cartId:
+        sessionId:
           nullable: false
+          type: string
+        customerId:
           type: string
         productItems:
           type: array
           items:
-            $ref: '#/components/schemas/CartItems'
+            $ref: '#/components/schemas/CartItem'
     Shopping-cart:
       type: object
       description: Representation of a Shopping-cart resource
@@ -337,8 +339,8 @@ components:
         productItems:
           type: array
           items:
-            $ref: '#/components/schemas/CartItems'
-    CartItems:
+            $ref: '#/components/schemas/CartItem'
+    CartItem:
       type: object
       description: Representation of a Items in a cart
       required:
@@ -380,7 +382,7 @@ components:
         productItems:
           type: array
           items:
-            $ref: '#/components/schemas/CartItems'
+            $ref: '#/components/schemas/CartItem'
       allOf:
         - $ref: '#/components/schemas/TotalSummary'
     ErrorResponse:

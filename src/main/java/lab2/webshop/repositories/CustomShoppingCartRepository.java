@@ -1,8 +1,9 @@
 package lab2.webshop.repositories;
 
-import lab2.webshop.openapi.model.Product;
+import lab2.webshop.openapi.model.CartItem;
+import lab2.webshop.openapi.model.ShoppingCartEntity;
 
 public interface CustomShoppingCartRepository {
 
-    void pushProduct(Product product);
+    ShoppingCartEntity pushCartItem(CartItem item, String sessionId);
 }

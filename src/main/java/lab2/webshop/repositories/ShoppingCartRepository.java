@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShoppingCartRepository extends MongoRepository<ShoppingCartEntity, String> {
+public interface ShoppingCartRepository extends MongoRepository<ShoppingCartEntity, String>, CustomShoppingCartRepository {
 
     @Query("{cartId:'?0'}")
     ShoppingCartEntity findCartByCartId(final String productId);

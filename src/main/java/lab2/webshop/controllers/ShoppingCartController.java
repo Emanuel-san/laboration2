@@ -1,9 +1,7 @@
 package lab2.webshop.controllers;
 
 import lab2.webshop.openapi.api.ShoppingCartsApi;
-import lab2.webshop.openapi.model.CartSummary;
-import lab2.webshop.openapi.model.ShoppingCart;
-import lab2.webshop.openapi.model.ShoppingCartEntity;
+import lab2.webshop.openapi.model.*;
 import lab2.webshop.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,20 +21,21 @@ public class ShoppingCartController implements ShoppingCartsApi {
         this.shoppingCartService = shoppingCartService;
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> createShoppingCart() {
-        return ResponseEntity.ok(shoppingCartService.createShoppingCart());
+    public ResponseEntity<ShoppingCartEntity> createShoppingCart(String sessionId) {
+        return ResponseEntity.ok(shoppingCartService.createShoppingCart(sessionId));
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> getShoppingCart(String shoppingCartId) {
-        return ResponseEntity.ok(shoppingCartService.getShoppingCart(shoppingCartId));
+    public ResponseEntity<ShoppingCartEntity> getShoppingCart(String sessionId) {
+        return ResponseEntity.ok(shoppingCartService.getShoppingCart(sessionId));
     }
     @Override
     public ResponseEntity<List<ShoppingCartEntity>> getShoppingCarts() {
         return ResponseEntity.ok(new ArrayList<>());
     }
+
     @Override
-    public ResponseEntity<CartSummary> updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart) {
-        // TODO - How to handle this logic? Should it just be add product?
-        return ResponseEntity.ok(new CartSummary());
+    public ResponseEntity<CartSummary> addToShoppingCart(String sessionId, ProductEntity productEntity) {
+        Boolean bool = shoppingCartService.addProductToCart(productEntity, sessionId);
+        return null;
     }
 }

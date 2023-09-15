@@ -152,19 +152,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Shopping-cart-entity'
-    post:
-      tags:
-        - Shopping-Carts
-      operationId: createShoppingCart
-      summary: Create a new shopping cart
-      responses:
-        200:
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Shopping-cart-entity'
-  /shopping-carts/{shopping-cart-id}:
+
+  /shopping-carts/{session-id}:
     get:
       tags:
         - Shopping-Carts
@@ -172,7 +161,7 @@ paths:
       summary: Retrieve a specific shopping cart
       parameters:
         - in: path
-          name: shopping-cart-id
+          name: session-id
           schema:
             type: string
           required: true
@@ -189,21 +178,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Shopping-Carts
+      operationId: createShoppingCart
+      summary: Create a new shopping cart
+      parameters:
+        - in: path
+          name: session-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shopping-cart-entity'
 
     put:
       tags:
         - Shopping-Carts
-      summary: Update an existing shopping cart
-      operationId: updateShoppingCart
+      summary: Add an item to cart
+      operationId: addToShoppingCart
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Shopping-cart'
+              $ref: '#/components/schemas/ProductEntity'
         required: true
       parameters:
         - in: path
-          name: shopping-cart-id
+          name: session-id
           schema:
             type: string
           required: true
@@ -280,6 +287,7 @@ components:
   schemas:
     Product:
       type: object
+      x-class-extra-annotation: "@lombok.Builder"
       description: Representation of a Product resource
       properties:
         name:

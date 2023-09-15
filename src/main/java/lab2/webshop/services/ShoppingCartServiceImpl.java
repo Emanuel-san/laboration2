@@ -1,15 +1,16 @@
 package lab2.webshop.services;
 
 import lab2.webshop.exceptions.NotFoundException;
-import lab2.webshop.openapi.model.CartSummary;
-import lab2.webshop.openapi.model.ShoppingCart;
-import lab2.webshop.openapi.model.ShoppingCartEntity;
+import lab2.webshop.openapi.model.*;
 import lab2.webshop.repositories.ShoppingCartRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,8 +24,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartEntity createShoppingCart() {
-        final ShoppingCartEntity newCart = new ShoppingCartEntity(UUID.randomUUID().toString());
+    public ShoppingCartEntity createShoppingCart(String sessionId) {
+        final ShoppingCartEntity newCart = new ShoppingCartEntity(sessionId);
         newCart.setProductItems(new ArrayList<>());
         shoppingCartRepository.insert(newCart);
         return newCart;
@@ -49,5 +50,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public CartSummary updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart) {
         // TODO - see controller
         return null;
+    }
+
+    @Override
+    public boolean addProductToCart(ProductEntity productEntity, String session) {
+        CartItem newItem = new CartItem(productEntity.getProductId());
+        Product product = Product.builder()
+                .name(productEntity.getName())
+                .description(productEntity.getDescription())
+                .price(productEntity.getPrice())
+                .image(Optional.ofNullable(productEntity).map(ProductEntity::getImage).orElse(null))
+                .build();
+        newItem.setQuantity(new BigDecimal(1));
+        newItem.setProduct(product);
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, session);
+        return shoppingCartEntity != null;
     }
 }

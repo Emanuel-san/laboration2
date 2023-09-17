@@ -220,13 +220,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartSummary'
+                $ref: '#/components/schemas/Shopping-cart-entity'
   ###################### /orders
   /orders:
     get:
       tags:
         - Orders
-      summary: Get all exisisting orders
+      summary: Get all existing orders
       operationId: getOrders
       responses:
         200:

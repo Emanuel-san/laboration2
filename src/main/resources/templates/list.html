@@ -1,13 +1,21 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Webshop</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../webshop.css">
   </head>
   <body>
-    <p th:text="'Product id: ' + ${product.getProductId()}" />
-    <p th:text="'name: ' + ${product.getName()}" />
-    <p th:text="'description: ' + ${product.getDescription()}" />
-    <p th:text="'price: ' + ${product.getPrice()}" />
+  <div th:insert="~{index :: header}"></div>
+  <div id="info-main">
+    <div class="product-display" th:each="product: ${products}">
+      <p th:text="'Product id: ' + ${product.getProductId()}" />
+      <p th:text="'name: ' + ${product.getName()}" />
+      <p th:text="'description: ' + ${product.getDescription()}" />
+      <p th:text="'price: ' + ${product.getPrice()}" />
+    </div>
+  </div>
+  <div th:insert="~{index :: shoppingCart}"></div>
   </body>
 </html>

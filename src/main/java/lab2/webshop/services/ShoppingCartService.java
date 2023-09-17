@@ -10,8 +10,8 @@ import java.util.List;
 public interface ShoppingCartService {
 
     ShoppingCartEntity createShoppingCart(String sessionId);
-    ShoppingCartEntity getShoppingCart(String shoppingCartId);
+    ShoppingCartEntity getShoppingCart(String sessionId);
     List<CartSummary> getShoppingCarts();
     CartSummary updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart);
-    boolean addProductToCart(ProductEntity productEntity, String session);
+    ShoppingCartEntity addProductToCart(ProductEntity productEntity, String session);
 }

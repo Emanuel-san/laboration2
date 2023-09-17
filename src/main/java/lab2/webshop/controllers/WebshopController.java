@@ -19,8 +19,9 @@ public class WebshopController {
     }
 
     @GetMapping ("/")
-    public String home(HttpServletRequest request){
-        request.getSession();
+    public String home(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        model.addAttribute("sessionId", session.getId());
         return "index";
     }
     @GetMapping("/page/list")
@@ -28,8 +29,8 @@ public class WebshopController {
                         Model model,
                         HttpServletRequest request) {
         HttpSession session = request.getSession();
-        System.out.println(session);
-        model.addAttribute("product", webshopFacade.getOneProduct("prd1"));
+        model.addAttribute("sessionId", session.getId());
+        model.addAttribute("products", webshopFacade.getAllProducts());
         return "list";
     }
 }

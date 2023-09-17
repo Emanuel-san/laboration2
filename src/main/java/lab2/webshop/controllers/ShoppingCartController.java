@@ -34,8 +34,8 @@ public class ShoppingCartController implements ShoppingCartsApi {
     }
 
     @Override
-    public ResponseEntity<CartSummary> addToShoppingCart(String sessionId, ProductEntity productEntity) {
-        Boolean bool = shoppingCartService.addProductToCart(productEntity, sessionId);
+    public ResponseEntity<ShoppingCartEntity> addToShoppingCart(String sessionId, ProductEntity productEntity) {
+        ShoppingCartEntity shoppingCartEntity = shoppingCartService.addProductToCart(productEntity, sessionId);
         return null;
     }
 }

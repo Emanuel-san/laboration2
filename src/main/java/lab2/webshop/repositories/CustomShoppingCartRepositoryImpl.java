@@ -23,6 +23,10 @@ public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepos
                         .and("productItems.productId")
                         .ne(item.getProductId()));
         Update update = new Update().push("productItems", item);
-        return mongoTemplate.findAndModify(query, update, ShoppingCartEntity.class);
+        ShoppingCartEntity shoppingCartEntity = mongoTemplate.findAndModify(query, update, ShoppingCartEntity.class);
+        if(shoppingCartEntity == null) {
+            shoppingCartEntity = mongoTemplate.findOne(new Query(Criteria.where("sessionId").is(sessionId)), ShoppingCartEntity.class);
+        }
+        return shoppingCartEntity;
     }
 }

@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Viewport height, ensuring full height of the page */
+}
+#header {
+    font-family: 'Roboto', sans-serif; /* Using the Roboto font */
+    font-weight: 500; /* Semi-bold weight */
+    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
+    color: white; /* Text color */
+    text-align: center; /* Centered text */
+    padding: 20px; /* Spacing inside the header */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-size: 1.5em; /* Increase font size */
+    letter-spacing: 1px; /* Spacing between letters for better appearance */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 20px; /* Spacing below the header, to separate from subsequent content */
+}
+#info-main {
+    display: flex;
+    flex: 1; /* Takes up all remaining space after the header */
+    border-radius: 8px; /* Rounded corners */
+    position: relative; /* Establishes a positioning context for the shoppingCart div */
+    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
+    color: white; /* Text color */
+}
+
+
+#shoppingCart {
+    border: 2px solid black;
+    position: fixed; /* Fixing the position of the shopping cart */
+    top: 0; /* Aligning it to the top */
+    right: 0; /* Aligning it to the far right */
+    height: 100vh; /* Makes it full height */
+    width: 200px; /* Adjust width as per requirement */
+    background: #ee0979; /* Just to visualize it. Adjust as required. */
+}
+.product-display {
+    border: 1px solid black;
+}

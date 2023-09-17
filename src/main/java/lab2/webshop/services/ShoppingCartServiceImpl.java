@@ -1,9 +1,7 @@
 package lab2.webshop.services;
 
-import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.*;
 import lab2.webshop.repositories.ShoppingCartRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -32,12 +29,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartEntity getShoppingCart(String shoppingCartId) {
-        ShoppingCartEntity cart = shoppingCartRepository.findCartByCartId(shoppingCartId);
-        if(cart == null) {
-            throw new NotFoundException("Cart with id " + shoppingCartId + " was not found");
+    public ShoppingCartEntity getShoppingCart(String sessionId) {
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.findCartByCartId(sessionId);
+        if(shoppingCartEntity == null) {
+            // Was not able to find a cart associated to the session id, create a new one.
+            shoppingCartEntity = createShoppingCart(sessionId);
         }
-        return cart;
+        return shoppingCartEntity;
     }
 
     @Override
@@ -53,7 +51,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean addProductToCart(ProductEntity productEntity, String session) {
+    public ShoppingCartEntity addProductToCart(ProductEntity productEntity, String sessionId) {
         CartItem newItem = new CartItem(productEntity.getProductId());
         Product product = Product.builder()
                 .name(productEntity.getName())
@@ -63,7 +61,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .build();
         newItem.setQuantity(new BigDecimal(1));
         newItem.setProduct(product);
-        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, session);
-        return shoppingCartEntity != null;
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, sessionId);
+        if(shoppingCartEntity == null){
+            // Was not able to find a cart associated to the session id, create a new one.
+            shoppingCartEntity = createShoppingCart(sessionId);
+        }
+        return shoppingCartEntity;
     }
 }

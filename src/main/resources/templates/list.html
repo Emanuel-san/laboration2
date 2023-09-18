@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="../webshop.css">
   </head>
   <body>
-  <div th:insert="~{index :: header}"></div>
+  <div th:replace="~{index :: header}"></div>
   <div id="info-main">
     <div id="store-front">
       <div class="product-display" th:each="product: ${products}">
-        <p th:text="'Product id: ' + ${product.getProductId()}" />
-        <p th:text="'name: ' + ${product.getName()}" />
-        <p th:text="'description: ' + ${product.getDescription()}" />
-        <p th:text="'price: ' + ${product.getPrice()}+'€'" />
+        <p th:text="${product.getProductId()}" />
+        <img class="product-picture" th:src="${product.getImage()}" alt="No image">
+        <p th:text="${product.getName()}" />
+        <p th:text="${product.getPrice()}+'€'" />
       </div>
     </div>
   </div>
-  <div th:insert="~{index :: shoppingCart}"></div>
+  <div th:replace="~{index :: shoppingCart}"></div>
   </body>
 </html>

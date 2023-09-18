@@ -2,12 +2,18 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh; /* Viewport height, ensuring full height of the page */
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
+}
+#header, #info-main {
+    width: calc(100% - 210px); /* Deducting the width of the shopping cart */
 }
 #header {
-    font-family: 'Roboto', sans-serif; /* Using the Roboto font */
+    display: block;
+    flex: 1;
     font-weight: 500; /* Semi-bold weight */
-    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
-    color: white; /* Text color */
+    background: white;
+    color: black; /* Text color */
     text-align: center; /* Centered text */
     padding: 20px; /* Spacing inside the header */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
@@ -15,33 +21,45 @@ body {
     letter-spacing: 1px; /* Spacing between letters for better appearance */
     border-radius: 8px; /* Rounded corners */
     margin-bottom: 20px; /* Spacing below the header, to separate from subsequent content */
+    max-height: 200px;
+    box-sizing: border-box;
 }
 #info-main {
     display: flex;
-    flex: 1; /* Takes up all remaining space after the header */
+    flex-grow: 1; /* Takes up all remaining space after the header */
     border-radius: 8px; /* Rounded corners */
     position: relative; /* Establishes a positioning context for the shoppingCart div */
-    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
-    color: white; /* Text color */
+    background: white;
+    color: black; /* Text color */
 }
 #store-front {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* auto-fill tries to fit as many columns as possible */
+    /* minmax(200px, 1fr) means columns are at least 200px wide but can grow */
 }
 
-#shoppingCart {
-    border: 2px solid black;
+#shopping-cart {
     position: fixed; /* Fixing the position of the shopping cart */
     top: 0; /* Aligning it to the top */
     right: 0; /* Aligning it to the far right */
     height: 100vh; /* Makes it full height */
     width: 200px; /* Adjust width as per requirement */
-    background: #ee0979; /* Just to visualize it. Adjust as required. */
+    background: white;
 }
 .product-display {
     border: 1px solid black;
-    flex: 0 0 calc(25% - 20px); /* Assuming you want 4 items per row, with 20px margin */
-    /* Set a height if you want to limit vertical size as well */
-    height: 200px; /* example height */
+    /* Set a height if you want to limit vertical size */
+    min-height: 200px; /* Maximum height*/
     overflow: hidden; /* To ensure content inside doesn't overflow */
+}
+.product-display * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.product-picture {
+    max-height: 200px;
+    max-width: 400px;
 }

@@ -30,7 +30,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartEntity getShoppingCart(String sessionId) {
-        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.findCartByCartId(sessionId);
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.findCartBySessionId(sessionId);
         if(shoppingCartEntity == null) {
             // Was not able to find a cart associated to the session id, create a new one.
             shoppingCartEntity = createShoppingCart(sessionId);

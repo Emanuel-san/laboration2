@@ -2,6 +2,7 @@ package lab2.webshop.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,9 @@ public class WebshopController {
 
     @GetMapping ("/")
     public String home(HttpServletRequest request, Model model){
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
+        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
         return "index";
     }
@@ -28,7 +31,9 @@ public class WebshopController {
     public String list(@RequestParam(name="name", required = false, defaultValue = "World")String name,
                         Model model,
                         HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
+        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
         model.addAttribute("products", webshopFacade.getAllProducts());
         return "list";

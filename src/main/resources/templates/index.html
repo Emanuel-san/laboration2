@@ -11,6 +11,11 @@
     <div id="info-main">
       <p>Get your stuff <a href="/page/list">here</a></p>
     </div>
-    <div th:fragment="shoppingCart" id="shoppingCart">Shoppingcart</div>
+    <div th:fragment="shoppingCart" id="shoppingCart">
+      <div class="cart-display" th:if="${!#lists.isEmpty(shoppingCart.getProductItems())}" th:each="cartitem: ${shoppingCart.getProductItems()}">
+        <p th:text="${cartitem.getProduct().getName()} + ' ' + ${cartitem.getQuantity()}"></p>
+      </div>
+      <p th:unless="${!#lists.isEmpty(shoppingCart.getProductItems())}">Cart is empty</p>
+    </div>
   </body>
 </html>

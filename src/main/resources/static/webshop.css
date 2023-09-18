@@ -24,7 +24,10 @@ body {
     background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
     color: white; /* Text color */
 }
-
+#store-front {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+}
 
 #shoppingCart {
     border: 2px solid black;
@@ -37,4 +40,8 @@ body {
 }
 .product-display {
     border: 1px solid black;
+    flex: 0 0 calc(25% - 20px); /* Assuming you want 4 items per row, with 20px margin */
+    /* Set a height if you want to limit vertical size as well */
+    height: 200px; /* example height */
+    overflow: hidden; /* To ensure content inside doesn't overflow */
 }

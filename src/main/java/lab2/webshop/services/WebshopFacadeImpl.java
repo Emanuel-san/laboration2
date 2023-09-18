@@ -4,10 +4,13 @@ import lab2.webshop.controllers.OrderController;
 import lab2.webshop.controllers.ProductController;
 import lab2.webshop.controllers.ShoppingCartController;
 import lab2.webshop.openapi.model.ProductEntity;
+import lab2.webshop.openapi.model.ShoppingCart;
+import lab2.webshop.openapi.model.ShoppingCartEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,12 +29,26 @@ public class WebshopFacadeImpl implements WebshopFacade {
     }
     @Override
     public List<ProductEntity> getAllProducts() {
-        ResponseEntity<List<ProductEntity>> responseList = productController.getProducts(null);
+        final ResponseEntity<List<ProductEntity>> responseList = productController.getProducts(null);
         return responseList.getBody();
     }
     @Override
     public ProductEntity getOneProduct(String productId){
-        ResponseEntity<ProductEntity> response = productController.getProduct(productId);
+        final ResponseEntity<ProductEntity> response = productController.getProduct(productId);
         return response.getBody();
+    }
+
+    @Override
+    public ShoppingCart getShoppingCart(String sessionId) {
+        final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
+        final ShoppingCartEntity shoppingCartEntity = response.getBody();
+        final ShoppingCart cart = new ShoppingCart();
+        if(shoppingCartEntity == null) {
+            // Initiate an empty list if we for some reason fail to collect/create a cart for the session.
+            cart.setProductItems(new ArrayList<>());
+            return cart;
+        }
+        cart.setProductItems(shoppingCartEntity.getProductItems());
+        return cart;
     }
 }

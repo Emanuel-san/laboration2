@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShoppingCartRepository extends MongoRepository<ShoppingCartEntity, String>, CustomShoppingCartRepository {
 
-    @Query("{cartId:'?0'}")
-    ShoppingCartEntity findCartByCartId(final String productId);
+    @Query("{sessionId:'?0'}")
+    ShoppingCartEntity findCartBySessionId(final String sessionId);
 }

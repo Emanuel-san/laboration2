@@ -9,11 +9,13 @@
   <body>
   <div th:insert="~{index :: header}"></div>
   <div id="info-main">
-    <div class="product-display" th:each="product: ${products}">
-      <p th:text="'Product id: ' + ${product.getProductId()}" />
-      <p th:text="'name: ' + ${product.getName()}" />
-      <p th:text="'description: ' + ${product.getDescription()}" />
-      <p th:text="'price: ' + ${product.getPrice()}" />
+    <div id="store-front">
+      <div class="product-display" th:each="product: ${products}">
+        <p th:text="'Product id: ' + ${product.getProductId()}" />
+        <p th:text="'name: ' + ${product.getName()}" />
+        <p th:text="'description: ' + ${product.getDescription()}" />
+        <p th:text="'price: ' + ${product.getPrice()}+'€'" />
+      </div>
     </div>
   </div>
   <div th:insert="~{index :: shoppingCart}"></div>

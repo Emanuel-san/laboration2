@@ -3,7 +3,6 @@ package lab2.webshop.services;
 import lab2.webshop.controllers.OrderController;
 import lab2.webshop.controllers.ProductController;
 import lab2.webshop.controllers.ShoppingCartController;
-import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.openapi.model.ShoppingCartEntity;

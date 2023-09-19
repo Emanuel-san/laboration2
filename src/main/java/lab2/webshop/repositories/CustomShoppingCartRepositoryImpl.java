@@ -2,6 +2,7 @@ package lab2.webshop.repositories;
 
 import lab2.webshop.openapi.model.CartItem;
 import lab2.webshop.openapi.model.ShoppingCartEntity;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,7 +24,7 @@ public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepos
                         .and("productItems.productId")
                         .ne(item.getProductId()));
         Update update = new Update().push("productItems", item);
-        ShoppingCartEntity shoppingCartEntity = mongoTemplate.findAndModify(query, update, ShoppingCartEntity.class);
+        ShoppingCartEntity shoppingCartEntity = mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true), ShoppingCartEntity.class);
         if(shoppingCartEntity == null) {
             shoppingCartEntity = mongoTemplate.findOne(new Query(Criteria.where("sessionId").is(sessionId)), ShoppingCartEntity.class);
         }

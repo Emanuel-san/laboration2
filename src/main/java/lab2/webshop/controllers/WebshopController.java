@@ -6,10 +6,13 @@ import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class WebshopController {
@@ -40,7 +43,7 @@ public class WebshopController {
         return "list";
     }
     @GetMapping("/page/products")
-    public String showProduct(@RequestParam(name="productId", required = true) String productId,
+    public String showProduct(@RequestParam(name="productId") String productId,
                               Model model,
                               HttpServletRequest request) {
         final HttpSession session = request.getSession();
@@ -50,5 +53,13 @@ public class WebshopController {
         model.addAttribute("productId", productId);
         model.addAttribute("product", webshopFacade.getOneProduct(productId));
         return "product";
+    }
+    @PostMapping("/shopping-cart/addToCart")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload, HttpSession session){
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        return ResponseEntity.ok(response);
     }
 }

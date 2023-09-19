@@ -48,8 +48,18 @@ body {
     width: 200px; /* Adjust width as per requirement */
     background: white;
 }
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; /* Optional: Add a gap between columns for spacing */
+    align-items: center; /* Center items vertically */
+}
+.product-detail-picture {
+    width: 100%;
+    height: auto;
+    display: block;  /* Ensures no extra space below the image */
+}
 .product-display {
-    border: 1px solid black;
     /* Set a height if you want to limit vertical size */
     min-height: 200px; /* Maximum height*/
     overflow: hidden; /* To ensure content inside doesn't overflow */
@@ -62,4 +72,9 @@ body {
 .product-picture {
     max-height: 200px;
     max-width: 400px;
+}
+.product-link {
+    display: block;    /* Makes the anchor a block element */
+    text-decoration: none;   /* Removes the underline */
+    color: inherit;   /* Inherits the color of the parent so the text doesn't look like a traditional link */
 }

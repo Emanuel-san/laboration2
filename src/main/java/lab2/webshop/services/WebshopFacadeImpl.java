@@ -3,6 +3,7 @@ package lab2.webshop.services;
 import lab2.webshop.controllers.OrderController;
 import lab2.webshop.controllers.ProductController;
 import lab2.webshop.controllers.ShoppingCartController;
+import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.openapi.model.ShoppingCartEntity;
@@ -33,13 +34,13 @@ public class WebshopFacadeImpl implements WebshopFacade {
         return responseList.getBody();
     }
     @Override
-    public ProductEntity getOneProduct(String productId){
+    public ProductEntity getOneProduct(final String productId){
         final ResponseEntity<ProductEntity> response = productController.getProduct(productId);
         return response.getBody();
     }
 
     @Override
-    public ShoppingCart getShoppingCart(String sessionId) {
+    public ShoppingCart getShoppingCart(final String sessionId) {
         final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
         final ShoppingCartEntity shoppingCartEntity = response.getBody();
         final ShoppingCart cart = new ShoppingCart();
@@ -50,5 +51,19 @@ public class WebshopFacadeImpl implements WebshopFacade {
         }
         cart.setProductItems(shoppingCartEntity.getProductItems());
         return cart;
+    }
+
+    @Override
+    public ShoppingCart addToCart(final String productId, final String sessionId) {
+        final ProductEntity productEntity = productController.getProduct(productId).getBody();
+        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(sessionId, productEntity).getBody();
+        ShoppingCart shoppingCart = new ShoppingCart();
+        if (shoppingCartEntity == null || shoppingCartEntity.getProductItems().isEmpty()){
+            // Something went wrong adding to cart, return a new empty cart.
+            shoppingCart.setProductItems(new ArrayList<>());
+            return shoppingCart;
+        }
+        shoppingCart.setProductItems(shoppingCartEntity.getProductItems());
+        return shoppingCart;
     }
 }

@@ -57,9 +57,10 @@ public class WebshopController {
     @PostMapping("/shopping-cart/addToCart")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload, HttpSession session){
-
+        ShoppingCart cart = webshopFacade.addToCart(payload.get("productId"), session.getId());
         Map<String, Object> response = new HashMap<>();
-        response.put("success", true);
+        response.put("success", !cart.getProductItems().isEmpty());
+        response.put("cartItems", cart.getProductItems());
         return ResponseEntity.ok(response);
     }
 }

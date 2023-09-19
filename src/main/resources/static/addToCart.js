@@ -1,5 +1,5 @@
 document.getElementById("addToCartBtn").addEventListener("click", function () {
-    const productId = this.getAttribute('th:data-product-id');
+    const productId = this.getAttribute('data-product-id');
 
     fetch("/shopping-cart/addToCart", {
         method: "POST",
@@ -10,7 +10,9 @@ document.getElementById("addToCartBtn").addEventListener("click", function () {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if(data.success) {
+                updateShoppingCartUI(data.cartItems);
+            }
         })
         .catch(error => {
             console.error("Error: ", error);

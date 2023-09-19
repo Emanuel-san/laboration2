@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Objects;
 
+/**
+ * Handles exceptions that we want to return as ErrorResponse.
+ */
 @ControllerAdvice
 public class WebshopExceptionHandler {
 

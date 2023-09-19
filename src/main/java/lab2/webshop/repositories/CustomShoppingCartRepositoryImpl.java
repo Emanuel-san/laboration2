@@ -8,8 +8,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+/**
+ * Implementation of {@link CustomShoppingCartRepository}
+ */
 public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepository{
 
+    /** Used to query database {@link MongoTemplate}*/
     final MongoTemplate mongoTemplate;
 
     public CustomShoppingCartRepositoryImpl(final MongoTemplate template){

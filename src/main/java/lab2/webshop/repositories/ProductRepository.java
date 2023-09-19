@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository interface for products collection.
+ */
 @Repository
 public interface ProductRepository extends MongoRepository<ProductEntity, String>, CustomProductRepository {
 

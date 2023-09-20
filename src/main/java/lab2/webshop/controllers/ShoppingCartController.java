@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class ShoppingCartController implements ShoppingCartsApi {
 
@@ -29,12 +26,11 @@ public class ShoppingCartController implements ShoppingCartsApi {
         return ResponseEntity.ok(shoppingCartService.getShoppingCart(sessionId));
     }
     @Override
-    public ResponseEntity<List<ShoppingCartEntity>> getShoppingCarts() {
-        return ResponseEntity.ok(new ArrayList<>());
-    }
-
-    @Override
     public ResponseEntity<ShoppingCartEntity> addToShoppingCart(String sessionId, ProductEntity productEntity) {
         return ResponseEntity.ok(shoppingCartService.addProductToCart(productEntity, sessionId));
+    }
+    @Override
+    public ResponseEntity<ShoppingCartEntity> deleteFromShoppingCart(String productId, String sessionId){
+        return ResponseEntity.ok(shoppingCartService.deleteFromShoppingCart(productId, sessionId));
     }
 }

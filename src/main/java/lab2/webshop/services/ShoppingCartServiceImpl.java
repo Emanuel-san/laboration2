@@ -68,4 +68,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         return shoppingCartEntity;
     }
+
+    @Override
+    public ShoppingCartEntity deleteFromShoppingCart(String productId, String sessionId) {
+        return shoppingCartRepository.removeCartItem(productId, sessionId);
+    }
 }

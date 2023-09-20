@@ -42,27 +42,30 @@ public class WebshopFacadeImpl implements WebshopFacade {
     public ShoppingCart getShoppingCart(final String sessionId) {
         final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
         final ShoppingCartEntity shoppingCartEntity = response.getBody();
-        final ShoppingCart cart = new ShoppingCart();
-        if(shoppingCartEntity == null) {
-            // Initiate an empty list if we for some reason fail to collect/create a cart for the session.
-            cart.setProductItems(new ArrayList<>());
-            return cart;
-        }
-        cart.setProductItems(shoppingCartEntity.getProductItems());
-        return cart;
+        return mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
     public ShoppingCart addToCart(final String productId, final String sessionId) {
         final ProductEntity productEntity = productController.getProduct(productId).getBody();
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(sessionId, productEntity).getBody();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        if (shoppingCartEntity == null || shoppingCartEntity.getProductItems().isEmpty()){
-            // Something went wrong adding to cart, return a new empty cart.
-            shoppingCart.setProductItems(new ArrayList<>());
-            return shoppingCart;
+        return mapFromCartEntity(shoppingCartEntity);
+    }
+
+    @Override
+    public ShoppingCart deleteFromCart(String productId, String sessionId) {
+        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
+        return mapFromCartEntity(shoppingCartEntity);
+    }
+
+    private ShoppingCart mapFromCartEntity(final ShoppingCartEntity entity){
+        final ShoppingCart cart = new ShoppingCart();
+        if(entity == null) {
+            // Something went wrong if entity is null, so we just initiate a new empty list.
+            cart.setProductItems(new ArrayList<>());
+            return cart;
         }
-        shoppingCart.setProductItems(shoppingCartEntity.getProductItems());
-        return shoppingCart;
+        cart.setProductItems(entity.getProductItems());
+        return cart;
     }
 }

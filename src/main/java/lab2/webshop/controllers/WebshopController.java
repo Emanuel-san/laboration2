@@ -57,13 +57,22 @@ public class WebshopController {
         model.addAttribute("product", webshopFacade.getOneProduct(productId));
         return "product";
     }
-    @PostMapping("/shopping-cart/addToCart")
+    @PutMapping("/shopping-cart/add-to-cart")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload, HttpSession session){
-        ShoppingCart cart = webshopFacade.addToCart(payload.get("productId"), session.getId());
+        final ShoppingCart cart = webshopFacade.addToCart(payload.get("productId"), session.getId());
         Map<String, Object> response = new HashMap<>();
         response.put("success", !cart.getProductItems().isEmpty());
         response.put("cartItems", cart.getProductItems());
         return ResponseEntity.ok(response);
     }
+    @DeleteMapping("/shopping-cart/delete-from-cart")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteFromCart(@RequestParam String productId, HttpSession session) {
+        final ShoppingCart cart = webshopFacade.deleteFromCart(productId, session.getId());
+        Map<String, Object> response = new HashMap<>();
+        response.put("cartItems", cart.getProductItems());
+        return ResponseEntity.ok(response);
+    }
+
 }

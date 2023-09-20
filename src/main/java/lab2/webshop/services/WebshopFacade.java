@@ -10,4 +10,5 @@ public interface WebshopFacade {
     ProductEntity getOneProduct(String productId);
     ShoppingCart getShoppingCart(String sessionId);
     ShoppingCart addToCart(String productId, String sessionId);
+    ShoppingCart deleteFromCart(String productId, String sessionId);
 }

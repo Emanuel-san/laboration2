@@ -1,5 +1,8 @@
 package lab2.webshop.repositories;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.result.UpdateResult;
+import lab2.webshop.controllers.ShoppingCartController;
 import lab2.webshop.openapi.model.CartItem;
 import lab2.webshop.openapi.model.ShoppingCartEntity;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -13,7 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
  */
 public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepository{
 
-    /** Used to query database {@link MongoTemplate}*/
+    /** Template to query database {@link MongoTemplate}*/
     final MongoTemplate mongoTemplate;
 
     public CustomShoppingCartRepositoryImpl(final MongoTemplate template){
@@ -33,5 +36,12 @@ public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepos
             shoppingCartEntity = mongoTemplate.findOne(new Query(Criteria.where("sessionId").is(sessionId)), ShoppingCartEntity.class);
         }
         return shoppingCartEntity;
+    }
+
+    @Override
+    public ShoppingCartEntity removeCartItem(String productId, String sessionId) {
+        Query query = new Query(Criteria.where("sessionId").is(sessionId));
+        Update update = new Update().pull("productItems", new BasicDBObject("productId", productId));
+        return mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true), ShoppingCartEntity.class);
     }
 }

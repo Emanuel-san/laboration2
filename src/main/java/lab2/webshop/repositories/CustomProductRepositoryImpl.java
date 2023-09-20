@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class CustomProductRepositoryImpl implements CustomProductRepository {
 
-    /** Used to query database {@link MongoTemplate}*/
+    /** Template to query database {@link MongoTemplate}*/
     final MongoTemplate mongoTemplate;
 
     /** Track number of fields to update in a product */

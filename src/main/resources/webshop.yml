@@ -137,22 +137,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   ###################### /shopping-carts
-  /shopping-carts:
-    get:
-      tags:
-        - Shopping-Carts
-      operationId: getShoppingCarts
-      summary: Retrieve all shopping carts
-      responses:
-        200:
-          description: Shopping carts response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Shopping-cart-entity'
-
   /shopping-carts/{session-id}:
     get:
       tags:
@@ -196,7 +180,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shopping-cart-entity'
-
+  /shopping-carts/items:
     put:
       tags:
         - Shopping-Carts
@@ -209,7 +193,30 @@ paths:
               $ref: '#/components/schemas/ProductEntity'
         required: true
       parameters:
-        - in: path
+        - in: query
+          name: session-id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shopping-cart-entity'
+    delete:
+      tags:
+        - Shopping-Carts
+      summary: Delete item from cart
+      operationId: deleteFromShoppingCart
+      parameters:
+        - in: query
+          name: product-id
+          schema:
+            type: string
+          required: true
+        - in: query
           name: session-id
           schema:
             type: string
@@ -401,3 +408,12 @@ components:
           type: string
         message:
           type: string
+    StatusEntity:
+      type: object
+      description: Status object to indicate if an operation was successfull or not
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+          nullable: false

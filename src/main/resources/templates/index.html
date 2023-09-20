@@ -14,8 +14,10 @@
     <div th:fragment="shoppingCart" id="shopping-cart">
       <div class="cart-display" th:if="${!#lists.isEmpty(shoppingCart.getProductItems())}" th:each="cartitem: ${shoppingCart.getProductItems()}">
         <p th:text="${cartitem.getProduct().getName()} + ' ' + ${cartitem.getQuantity()}"></p>
+        <button class="deleteFromCartBtn" th:data-product-id="${cartitem.getProductId()}">Remove</button>
       </div>
       <p th:unless="${!#lists.isEmpty(shoppingCart.getProductItems())}">Cart is empty</p>
     </div>
+    <script src="../global_util.js"></script>
   </body>
 </html>

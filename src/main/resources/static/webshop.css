@@ -9,21 +9,53 @@ body {
     width: calc(100% - 210px); /* Deducting the width of the shopping cart */
 }
 #header {
-    display: block;
-    flex: 1;
-    font-weight: 500; /* Semi-bold weight */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: white;
-    color: black; /* Text color */
-    text-align: center; /* Centered text */
-    padding: 20px; /* Spacing inside the header */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    font-size: 1.5em; /* Increase font size */
-    letter-spacing: 1px; /* Spacing between letters for better appearance */
-    border-radius: 8px; /* Rounded corners */
-    margin-bottom: 20px; /* Spacing below the header, to separate from subsequent content */
-    max-height: 200px;
+    color: black;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     box-sizing: border-box;
 }
+
+#title, #session {
+    text-align: center;
+}
+
+#login-form form {
+    display: flex;
+    gap: 10px; /* Adjust as needed */
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    padding: 5px;
+}
+
+#login-form button {
+    cursor: pointer;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+#login-form button:hover {
+    background-color: white;
+    color: black;
+}
+
 #info-main {
     display: flex;
     flex-grow: 1; /* Takes up all remaining space after the header */

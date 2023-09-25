@@ -410,7 +410,7 @@ components:
           type: string
     StatusEntity:
       type: object
-      description: Status object to indicate if an operation was successfull or not
+      description: Status object to indicate if an operation was successful or not
       required:
         - success
       properties:

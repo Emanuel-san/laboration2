@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="webshop.css">
   </head>
   <body>
-    <div th:fragment="header" id="header"><p>Webshop</p><p th:text="${sessionId}"></p> </div>
+    <div th:fragment="header" id="header">
+      <p>Webshop</p>
+      <p th:text="${sessionId}"></p>
+      <div id="login-form">
+        <form action="/login" method="post">
+          <input type="text" name="username" placeholder="Username" required />
+          <input type="password" name="password" placeholder="Password" required />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
     <div id="info-main">
       <p>Get your stuff <a href="/page/list">here</a></p>
     </div>

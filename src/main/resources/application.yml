@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://webshopuser:XNsootYOgPdYb7QH@cluster0.s0pykox.mongodb.net/?retryWrites=true&w=majority
+      database: Webshop

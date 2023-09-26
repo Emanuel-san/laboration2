@@ -2,11 +2,9 @@ package lab2.webshop.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +26,12 @@ public class WebshopController {
     }
 
     @GetMapping ("/")
-    public String home(HttpServletRequest request, Model model){
-        final HttpSession session = request.getSession();
+    public String home(HttpServletRequest request, Model model, HttpSession session){
+        //final HttpSession session = request.getSession();
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        if(session.getAttribute("username") != null) {
+            model.addAttribute("username", session.getAttribute("username"));
+        }
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
         return "index";
@@ -76,7 +77,10 @@ public class WebshopController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/login")
-    public String login(HttpRequest request){}
+    public String login(@RequestParam String username, @RequestParam String password, HttpSession session){
+        session.setAttribute("username", username);
+        return "redirect:/";
+    }
 
 
 }

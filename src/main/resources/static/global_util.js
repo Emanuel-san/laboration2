@@ -40,6 +40,22 @@ function updateShoppingCartUI(cartItems) {
             cartItemDiv.appendChild(cartItemText);
 
             const cartItemRemoveButton = document.createElement("button");
+            cartItemRemoveButton.addEventListener("click", function (){
+                const productId = this.getAttribute('data-product-id');
+                fetch(`/shopping-cart/delete-from-cart?productId=${productId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        updateShoppingCartUI(data.cartItems);
+                    })
+                    .catch(error => {
+                        console.error("Error: ", error);
+                    });
+            });
             cartItemRemoveButton.className = "deleteFromCartBtn";
             cartItemRemoveButton.setAttribute("data-product-id", item.productId);
             cartItemRemoveButton.innerText = "Remove";

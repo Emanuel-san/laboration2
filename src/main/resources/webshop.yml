@@ -288,10 +288,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /users/addUser:
+    post:
+      tags:
+        - Users
+      summary: Add a new user from an authentication event
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
 
 
 components:
   schemas:
+    Provider:
+      enum: [GOOGLE, LOCAL]
+      type: string
+    User:
+      type: object
+      x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"users\")"
+      description: Represents a user
+      properties:
+        provider:
+          $ref: '#/components/schemas/Provider'
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
     Product:
       type: object
       x-class-extra-annotation: "@lombok.Builder"

@@ -5,11 +5,17 @@ import jakarta.servlet.http.HttpSession;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +32,8 @@ public class WebshopController {
     }
 
     @GetMapping ("/")
-    public String home(HttpServletRequest request, Model model, HttpSession session){
-        //final HttpSession session = request.getSession();
+    public String home(Model model, HttpSession session, @AuthenticationPrincipal OAuth2User principal, Authentication authentication){
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
-        if(session.getAttribute("username") != null) {
-            model.addAttribute("username", session.getAttribute("username"));
-        }
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
         return "index";
@@ -76,11 +78,18 @@ public class WebshopController {
         response.put("cartItems", cart.getProductItems());
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session){
-        session.setAttribute("username", username);
+    @GetMapping("/page/login")
+    public String login(HttpSession session, Model model){
+        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        model.addAttribute("shoppingCart", cart);
+        model.addAttribute("sessionId", session.getId());
+        return "login";
+    }
+    @GetMapping("/users")
+    public String finishAuthorize(@AuthenticationPrincipal OAuth2User principal, HttpSession session) {
         return "redirect:/";
     }
-
+    @PostMapping("/logout")
+    public void logout(){}
 
 }

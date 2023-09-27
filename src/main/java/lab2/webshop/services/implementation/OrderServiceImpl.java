@@ -1,14 +1,15 @@
-package lab2.webshop.services;
+package lab2.webshop.services.implementation;
 
 import lab2.webshop.openapi.model.Order;
 import lab2.webshop.repositories.OrderRepository;
+import lab2.webshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     OrderRepository orderRepository;
 

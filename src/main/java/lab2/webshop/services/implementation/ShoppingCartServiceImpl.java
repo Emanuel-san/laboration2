@@ -1,7 +1,8 @@
-package lab2.webshop.services;
+package lab2.webshop.services.implementation;
 
 import lab2.webshop.openapi.model.*;
 import lab2.webshop.repositories.ShoppingCartRepository;
+import lab2.webshop.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

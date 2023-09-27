@@ -8,16 +8,11 @@
   </head>
   <body>
     <div th:fragment="header" id="header">
-      <p th:if="${username != null}" th:text="${username}"></p>
       <p>Webshop</p>
       <p th:text="${sessionId}"></p>
-      <div id="login-form">
-        <form action="/login" method="POST">
-          <input type="text" name="username" placeholder="Username" required />
-          <input type="password" name="password" placeholder="Password" required />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      <form action="/page/login" method="GET">
+        <button type="submit">Login</button>
+      </form>
     </div>
     <div id="info-main">
       <p>Get your stuff <a href="/page/list">here</a></p>

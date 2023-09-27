@@ -27,35 +27,6 @@ body {
     text-align: center;
 }
 
-#login-form form {
-    display: flex;
-    gap: 10px; /* Adjust as needed */
-}
-
-#login-form input[type="text"],
-#login-form input[type="password"] {
-    padding: 5px;
-}
-
-#login-form button {
-    cursor: pointer;
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-}
-
-#login-form button:hover {
-    background-color: white;
-    color: black;
-}
-
 #info-main {
     display: flex;
     flex-grow: 1; /* Takes up all remaining space after the header */

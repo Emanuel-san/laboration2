@@ -1,8 +1,9 @@
-package lab2.webshop.repositories;
+package lab2.webshop.repositories.implementation;
 
 import com.mongodb.BasicDBObject;
 import lab2.webshop.openapi.model.CartItem;
 import lab2.webshop.openapi.model.ShoppingCartEntity;
+import lab2.webshop.repositories.CustomShoppingCartRepository;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

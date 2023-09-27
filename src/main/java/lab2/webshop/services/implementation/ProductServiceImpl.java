@@ -1,9 +1,10 @@
-package lab2.webshop.services;
+package lab2.webshop.services.implementation;
 
 import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.repositories.ProductRepository;
+import lab2.webshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

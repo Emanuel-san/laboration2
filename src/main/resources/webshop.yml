@@ -299,6 +299,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+        required: true
       responses:
         200:
           description: Successful response
@@ -306,8 +307,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
-
 
 components:
   schemas:

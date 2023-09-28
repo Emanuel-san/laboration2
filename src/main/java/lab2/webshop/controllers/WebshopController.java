@@ -25,6 +25,7 @@ import java.util.Map;
  */
 @Controller
 public class WebshopController {
+    private static final String USER_AUTHENTICATED = "authenticated";
     WebshopFacade webshopFacade;
     @Autowired
     public WebshopController(WebshopFacade webshopFacade){
@@ -32,12 +33,17 @@ public class WebshopController {
     }
 
     @GetMapping ("/")
-    public String home(Model model, HttpSession session, @AuthenticationPrincipal OAuth2User principal, Authentication authentication){
+    public String home(final Model model, final HttpSession session, @AuthenticationPrincipal OAuth2User principal){
+        boolean authenticated = false;
         if(principal != null) {
             if(principal instanceof DefaultOidcUser user) {
-                user.getUserInfo();
+                if(!webshopFacade.userExists(user)) {
+                    webshopFacade.addUser(user);
+                }
             }
+            authenticated = true;
         }
+        model.addAttribute(USER_AUTHENTICATED, authenticated);
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
@@ -66,6 +72,13 @@ public class WebshopController {
         model.addAttribute("product", webshopFacade.getOneProduct(productId));
         return "product";
     }
+    @GetMapping("/page/login")
+    public String login(HttpSession session, Model model){
+        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        model.addAttribute("shoppingCart", cart);
+        model.addAttribute("sessionId", session.getId());
+        return "login";
+    }
     @PutMapping("/shopping-cart/add-to-cart")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload, HttpSession session){
@@ -83,23 +96,4 @@ public class WebshopController {
         response.put("cartItems", cart.getProductItems());
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/page/login")
-    public String login(HttpSession session, Model model){
-        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
-        model.addAttribute("shoppingCart", cart);
-        model.addAttribute("sessionId", session.getId());
-        return "login";
-    }
-    @GetMapping("/users")
-    public String finishAuthorize(@AuthenticationPrincipal OAuth2User principal, HttpSession session) {
-        if(principal instanceof DefaultOidcUser user) {
-            if (user.getIssuer().getAuthority().equals(Authorities.GOOGLE.getName())) {
-                System.out.println(Authorities.GOOGLE.name());
-            }
-        }
-        return "redirect:/";
-    }
-    @PostMapping("/logout")
-    public void logout(){}
-
 }

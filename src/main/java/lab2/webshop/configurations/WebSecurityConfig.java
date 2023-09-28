@@ -14,7 +14,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 //.authorizeHttpRequests((requests) -> requests.requestMatchers("/shopping-cart/add-to-cart**", "/shopping-cart/delete-from-cart**").permitAll())
-                .oauth2Login(oauth2 -> oauth2.loginPage("/page/login").defaultSuccessUrl("/users"));
+                .oauth2Login(oauth2 -> oauth2.loginPage("/page/login").defaultSuccessUrl("/"));
         return http.build();
     }
 }

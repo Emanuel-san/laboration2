@@ -1,10 +1,12 @@
 package lab2.webshop.controllers;
 
+import lab2.webshop.exceptions.NotFoundException;
 import lab2.webshop.openapi.api.UsersApi;
 import lab2.webshop.openapi.model.Provider;
 import lab2.webshop.openapi.model.User;
 import lab2.webshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -24,7 +26,14 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<User> getUser(final Provider provider, String email){
-        return ResponseEntity.ok(usersService.getUser(provider, email));
+    public ResponseEntity<User> getUser(final Provider provider, String email) {
+        User user;
+        try {
+            user = usersService.getUser(provider, email);
+        }
+        catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(user);
     }
 }

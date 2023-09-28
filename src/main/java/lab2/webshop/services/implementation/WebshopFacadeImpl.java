@@ -58,20 +58,26 @@ public class WebshopFacadeImpl implements WebshopFacade {
     }
 
     @Override
-    public ShoppingCart deleteFromCart(String productId, String sessionId) {
+    public ShoppingCart deleteFromCart(final String productId, final String sessionId) {
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
         return mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
-    public User addUser(User newUser) {
+    public User addUser(final User newUser) {
         return usersController.addUser(newUser).getBody();
     }
 
     @Override
-    public boolean userExists(DefaultOidcUser principal) {
-        User user = mapFromOidc(principal);
+    public User addUser(DefaultOidcUser principal) {
+        return usersController.addUser(mapUserFromOidc(principal)).getBody();
+    }
+
+    @Override
+    public boolean userExists(final DefaultOidcUser principal) {
+        User user = mapUserFromOidc(principal);
         ResponseEntity<User> response = usersController.getUser(user.getProvider(), user.getEmail());
+
         return response.getStatusCode().is2xxSuccessful();
     }
 
@@ -86,8 +92,8 @@ public class WebshopFacadeImpl implements WebshopFacade {
         return cart;
     }
 
-    private User mapFromOidc(DefaultOidcUser principal) {
-        User user = new User();
+    private User mapUserFromOidc(final DefaultOidcUser principal) {
+        final User user = new User();
         if(principal.getIssuer().getAuthority().equals(Authorities.GOOGLE.getName())) {
             user.setProvider(Provider.GOOGLE);
         }

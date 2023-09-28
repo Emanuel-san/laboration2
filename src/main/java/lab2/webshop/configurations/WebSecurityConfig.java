@@ -8,11 +8,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class OAuth2LoginSecurityConfig {
+public class WebSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.oauth2Login(oauth2 -> oauth2.loginPage("/page/login").defaultSuccessUrl("/users"));
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                //.authorizeHttpRequests((requests) -> requests.requestMatchers("/shopping-cart/add-to-cart**", "/shopping-cart/delete-from-cart**").permitAll())
+                .oauth2Login(oauth2 -> oauth2.loginPage("/page/login").defaultSuccessUrl("/users"));
         return http.build();
     }
 }

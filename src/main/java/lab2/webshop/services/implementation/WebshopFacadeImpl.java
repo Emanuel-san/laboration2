@@ -4,13 +4,12 @@ import lab2.webshop.controllers.OrderController;
 import lab2.webshop.controllers.ProductController;
 import lab2.webshop.controllers.ShoppingCartController;
 import lab2.webshop.controllers.UsersController;
-import lab2.webshop.openapi.model.ProductEntity;
-import lab2.webshop.openapi.model.ShoppingCart;
-import lab2.webshop.openapi.model.ShoppingCartEntity;
-import lab2.webshop.openapi.model.User;
+import lab2.webshop.openapi.model.*;
 import lab2.webshop.services.WebshopFacade;
+import lab2.webshop.util.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,8 +65,14 @@ public class WebshopFacadeImpl implements WebshopFacade {
 
     @Override
     public User addUser(User newUser) {
-        final User addedUser = usersController.addUser(newUser).getBody();
-        return addedUser;
+        return usersController.addUser(newUser).getBody();
+    }
+
+    @Override
+    public boolean userExists(DefaultOidcUser principal) {
+        User user = mapFromOidc(principal);
+        ResponseEntity<User> response = usersController.getUser(user.getProvider(), user.getEmail());
+        return response.getStatusCode().is2xxSuccessful();
     }
 
     private ShoppingCart mapFromCartEntity(final ShoppingCartEntity entity){
@@ -79,5 +84,19 @@ public class WebshopFacadeImpl implements WebshopFacade {
         }
         cart.setProductItems(entity.getProductItems());
         return cart;
+    }
+
+    private User mapFromOidc(DefaultOidcUser principal) {
+        User user = new User();
+        if(principal.getIssuer().getAuthority().equals(Authorities.GOOGLE.getName())) {
+            user.setProvider(Provider.GOOGLE);
+        }
+        else {
+            user.setProvider(Provider.LOCAL);
+        }
+        user.setFirstname(principal.getGivenName());
+        user.setLastname(principal.getFamilyName());
+        user.setEmail(principal.getEmail());
+        return user;
     }
 }

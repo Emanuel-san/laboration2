@@ -16,3 +16,6 @@ spring:
               - email
               - profile
               - openid
+logging:
+  level:
+    org.springframework.security: DEBUG

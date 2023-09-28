@@ -288,7 +288,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /users/addUser:
+  /users:
     post:
       tags:
         - Users
@@ -307,8 +307,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+    get:
+      tags:
+        - Users
+      summary: Fetch a user by provider and email
+      operationId: getUser
+      parameters:
+        - in: query
+          name: provider
+          schema:
+            $ref: '#/components/schemas/Provider'
+          required: true
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: User was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://accounts.google.com/o/oauth2/token
+          scopes:
+            email: email access
+            profile: profile access
+            openid: OIDC
   schemas:
     Provider:
       enum: [GOOGLE, LOCAL]

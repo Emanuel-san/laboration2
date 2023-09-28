@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.services.WebshopFacade;
+import lab2.webshop.util.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,6 @@ import java.util.Map;
  */
 @Controller
 public class WebshopController {
-
     WebshopFacade webshopFacade;
     @Autowired
     public WebshopController(WebshopFacade webshopFacade){
@@ -33,6 +33,11 @@ public class WebshopController {
 
     @GetMapping ("/")
     public String home(Model model, HttpSession session, @AuthenticationPrincipal OAuth2User principal, Authentication authentication){
+        if(principal != null) {
+            if(principal instanceof DefaultOidcUser user) {
+                user.getUserInfo();
+            }
+        }
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
@@ -87,6 +92,11 @@ public class WebshopController {
     }
     @GetMapping("/users")
     public String finishAuthorize(@AuthenticationPrincipal OAuth2User principal, HttpSession session) {
+        if(principal instanceof DefaultOidcUser user) {
+            if (user.getIssuer().getAuthority().equals(Authorities.GOOGLE.getName())) {
+                System.out.println(Authorities.GOOGLE.name());
+            }
+        }
         return "redirect:/";
     }
     @PostMapping("/logout")

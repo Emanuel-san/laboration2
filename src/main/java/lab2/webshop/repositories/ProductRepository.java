@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends MongoRepository<ProductEntity, String>, CustomProductRepository {
 
-    @Query("{productId:'?0'}")
     ProductEntity findItemByProductId(final String productId);
 
     @Query(value = "{productId:'?0'}", delete = true)

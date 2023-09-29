@@ -10,6 +10,7 @@ import lab2.webshop.util.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,21 +63,22 @@ public class WebshopFacadeImpl implements WebshopFacade {
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
         return mapFromCartEntity(shoppingCartEntity);
     }
-
-    @Override
-    public User addUser(final User newUser) {
-        return usersController.addUser(newUser).getBody();
-    }
-
-    @Override
-    public User addUser(DefaultOidcUser principal) {
-        return usersController.addUser(mapUserFromOidc(principal)).getBody();
-    }
     @Override
     public User getUser(DefaultOidcUser principal) {
         User user = mapUserFromOidc(principal);
         ResponseEntity<User> response = usersController.getUser(user.getProvider(), user.getEmail());
         return response.getBody();
+    }
+
+    @Override
+    public User isClientAuthenticated(OAuth2User principal) {
+        if(principal instanceof DefaultOidcUser user) {
+            User shopUser = mapUserFromOidc(user);
+            return usersController
+                    .getUser(shopUser.getProvider(), user.getEmail()).getStatusCode()
+                    .is2xxSuccessful() ? shopUser : usersController.addUser(shopUser).getBody();
+        }
+        return null;
     }
 
     private ShoppingCart mapFromCartEntity(final ShoppingCartEntity entity){

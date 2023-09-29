@@ -16,6 +16,6 @@ spring:
               - email
               - profile
               - openid
-logging:
-  level:
-    org.springframework.security: DEBUG
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth?prompt=consent

@@ -13,7 +13,12 @@
       <form th:if="${!authenticated}" action="/page/login" method="GET">
         <button type="submit">Login</button>
       </form>
-      <p th:unless="${!authenticated}" th:text="'Welcome ' + ${user.getFirstname()}"></p>
+      <div id="logged-in" th:unless="${!authenticated}">
+        <p th:text="'Welcome ' + ${user.getFirstname()}"></p>
+        <form action="/logout" method="GET">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
     </div>
     <div id="info-main">
       <p>Get your stuff <a href="/page/list">here</a></p>

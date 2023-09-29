@@ -15,5 +15,5 @@ public interface WebshopFacade {
     ShoppingCart deleteFromCart(String productId, String sessionId);
     User addUser(User newUser);
     User addUser(DefaultOidcUser newUser);
-    boolean userExists(DefaultOidcUser user);
+    User getUser(DefaultOidcUser principal);
 }

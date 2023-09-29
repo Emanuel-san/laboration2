@@ -3,12 +3,10 @@ package lab2.webshop.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lab2.webshop.openapi.model.ShoppingCart;
+import lab2.webshop.openapi.model.User;
 import lab2.webshop.services.WebshopFacade;
-import lab2.webshop.util.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +32,10 @@ public class WebshopController {
     @GetMapping ("/")
     public String home(final Model model, final HttpSession session, @AuthenticationPrincipal OAuth2User principal){
         boolean authenticated = false;
-        if(principal != null) {
-            if(principal instanceof DefaultOidcUser user) {
-                if(!webshopFacade.userExists(user)) {
-                    webshopFacade.addUser(user);
-                }
-            }
+        User user = isUserAuthenticated(principal);
+        if(user != null) {
             authenticated = true;
+            model.addAttribute("user", user);
         }
         model.addAttribute(USER_AUTHENTICATED, authenticated);
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
@@ -52,7 +46,15 @@ public class WebshopController {
     @GetMapping("/page/list")
     public String list(@RequestParam(name="name", required = false, defaultValue = "World")String name,
                         Model model,
-                        HttpServletRequest request) {
+                        HttpServletRequest request,
+                        @AuthenticationPrincipal OAuth2User principal) {
+        boolean authenticated = false;
+        User user = isUserAuthenticated(principal);
+        if(user != null) {
+            authenticated = true;
+            model.addAttribute("user", user);
+        }
+        model.addAttribute(USER_AUTHENTICATED, authenticated);
         final HttpSession session = request.getSession();
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("shoppingCart", cart);
@@ -63,7 +65,15 @@ public class WebshopController {
     @GetMapping("/page/products")
     public String showProduct(@RequestParam(name="productId") String productId,
                               Model model,
-                              HttpServletRequest request) {
+                              HttpServletRequest request,
+                              @AuthenticationPrincipal OAuth2User principal) {
+        boolean authenticated = false;
+        User user = isUserAuthenticated(principal);
+        if(user != null) {
+            authenticated = true;
+            model.addAttribute("user", user);
+        }
+        model.addAttribute(USER_AUTHENTICATED, authenticated);
         final HttpSession session = request.getSession();
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("sessionId", session.getId());
@@ -73,7 +83,14 @@ public class WebshopController {
         return "product";
     }
     @GetMapping("/page/login")
-    public String login(HttpSession session, Model model){
+    public String login(HttpSession session, Model model, @AuthenticationPrincipal OAuth2User principal){
+        boolean authenticated = false;
+        User user = isUserAuthenticated(principal);
+        if(user != null) {
+            authenticated = true;
+            model.addAttribute("user", user);
+        }
+        model.addAttribute(USER_AUTHENTICATED, authenticated);
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());
@@ -95,5 +112,18 @@ public class WebshopController {
         Map<String, Object> response = new HashMap<>();
         response.put("cartItems", cart.getProductItems());
         return ResponseEntity.ok(response);
+    }
+
+    private User isUserAuthenticated(OAuth2User principal) {
+        User localUser = null;
+        if(principal != null) {
+            if(principal instanceof DefaultOidcUser user) {
+                localUser = webshopFacade.getUser(user);
+                if(localUser == null) {
+                    localUser = webshopFacade.addUser(user);
+                }
+            }
+        }
+        return localUser;
     }
 }

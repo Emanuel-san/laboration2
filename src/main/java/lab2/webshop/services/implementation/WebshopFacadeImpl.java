@@ -72,13 +72,11 @@ public class WebshopFacadeImpl implements WebshopFacade {
     public User addUser(DefaultOidcUser principal) {
         return usersController.addUser(mapUserFromOidc(principal)).getBody();
     }
-
     @Override
-    public boolean userExists(final DefaultOidcUser principal) {
+    public User getUser(DefaultOidcUser principal) {
         User user = mapUserFromOidc(principal);
         ResponseEntity<User> response = usersController.getUser(user.getProvider(), user.getEmail());
-
-        return response.getStatusCode().is2xxSuccessful();
+        return response.getBody();
     }
 
     private ShoppingCart mapFromCartEntity(final ShoppingCartEntity entity){

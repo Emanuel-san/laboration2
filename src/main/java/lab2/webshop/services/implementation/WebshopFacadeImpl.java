@@ -7,6 +7,7 @@ import lab2.webshop.controllers.UsersController;
 import lab2.webshop.openapi.model.*;
 import lab2.webshop.services.WebshopFacade;
 import lab2.webshop.util.Authorities;
+import lab2.webshop.util.WebshopModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -48,61 +49,36 @@ public class WebshopFacadeImpl implements WebshopFacade {
     public ShoppingCart getShoppingCart(final String sessionId) {
         final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
         final ShoppingCartEntity shoppingCartEntity = response.getBody();
-        return mapFromCartEntity(shoppingCartEntity);
+        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
     public ShoppingCart addToCart(final String productId, final String sessionId) {
         final ProductEntity productEntity = productController.getProduct(productId).getBody();
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(sessionId, productEntity).getBody();
-        return mapFromCartEntity(shoppingCartEntity);
+        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
     public ShoppingCart deleteFromCart(final String productId, final String sessionId) {
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
-        return mapFromCartEntity(shoppingCartEntity);
+        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
     }
     @Override
-    public User getUser(DefaultOidcUser principal) {
-        User user = mapUserFromOidc(principal);
-        ResponseEntity<User> response = usersController.getUser(user.getProvider(), user.getEmail());
-        return response.getBody();
-    }
-
-    @Override
-    public User isClientAuthenticated(OAuth2User principal) {
-        if(principal instanceof DefaultOidcUser user) {
-            User shopUser = mapUserFromOidc(user);
-            return usersController
-                    .getUser(shopUser.getProvider(), user.getEmail()).getStatusCode()
-                    .is2xxSuccessful() ? shopUser : usersController.addUser(shopUser).getBody();
+    public User getUser(OAuth2User principal) {
+        if(principal instanceof DefaultOidcUser user){
+            User shopUser = WebshopModelMapper.mapUserFromOidc(user);
+            ResponseEntity<User> response = usersController.getUser(shopUser.getProvider(), shopUser.getEmail());
+            return response.getBody();
         }
         return null;
     }
-
-    private ShoppingCart mapFromCartEntity(final ShoppingCartEntity entity){
-        final ShoppingCart cart = new ShoppingCart();
-        if(entity == null) {
-            // Something went wrong if entity is null, so we just initiate a new empty list.
-            cart.setProductItems(new ArrayList<>());
-            return cart;
-        }
-        cart.setProductItems(entity.getProductItems());
-        return cart;
-    }
-
-    private User mapUserFromOidc(final DefaultOidcUser principal) {
-        final User user = new User();
-        if(principal.getIssuer().getAuthority().equals(Authorities.GOOGLE.getName())) {
-            user.setProvider(Provider.GOOGLE);
-        }
-        else {
-            user.setProvider(Provider.LOCAL);
-        }
-        user.setFirstname(principal.getGivenName());
-        user.setLastname(principal.getFamilyName());
-        user.setEmail(principal.getEmail());
-        return user;
+    @Override
+    public User addUserOnFirstLogin(DefaultOidcUser user) {
+        User shopUser = WebshopModelMapper.mapUserFromOidc(user);
+        ResponseEntity<User> response = usersController.getUser(shopUser.getProvider(), shopUser.getEmail());
+        return response
+                .getStatusCode()
+                .is2xxSuccessful() ? response.getBody() : usersController.addUser(shopUser).getBody();
     }
 }

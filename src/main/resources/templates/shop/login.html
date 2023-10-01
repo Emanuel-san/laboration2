@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="../webshop.css">
 </head>
 <body>
-<div th:replace="~{index :: header}"></div>
+<div th:replace="~{shop/index :: header}"></div>
 <div id="info-main">
     <div id="login-options">
        <a th:href="@{'/oauth2/authorization/google'}">Login with Google</a>
     </div>
 </div>
-<div th:replace="~{index :: shoppingCart}"></div>
+<div th:replace="~{shop/index :: shoppingCart}"></div>
 <script src="../global_util.js"></script>
 </body>
 </html>>

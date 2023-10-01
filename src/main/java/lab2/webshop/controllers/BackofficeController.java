@@ -8,6 +8,6 @@ public class BackofficeController {
 
     @GetMapping("/backoffice")
     public String index(){
-        return "backoffice";
+        return "bo/overview";
     }
 }

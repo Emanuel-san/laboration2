@@ -4,7 +4,7 @@
     <title>Webshop</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="webshop.css">
+    <link rel="stylesheet" href="../webshop.css">
   </head>
   <body>
     <div th:fragment="header" id="header">
@@ -17,6 +17,9 @@
         <p th:text="'Welcome ' + ${user.getFirstname()}"></p>
         <form action="/logout" method="GET">
           <button type="submit">Logout</button>
+        </form>
+        <form th:if="${isAdmin}" action="/backoffice" method="GET">
+          <button type="submit">Backoffice</button>
         </form>
       </div>
     </div>

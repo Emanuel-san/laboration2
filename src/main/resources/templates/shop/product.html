@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../webshop.css">
 </head>
 <body>
-<div th:replace="~{index :: header}"></div>
+<div th:replace="~{shop/index :: header}"></div>
 <div id="info-main">
   <div th:if="${product == null}"><p th:text="'No product found with id: ' + ${productId}"></p></div>
   <div class="product-detail" th:if="${product != null}">
@@ -23,7 +23,7 @@
     </div>
   </div>
 </div>
-<div th:replace="~{index :: shoppingCart}"></div>
+<div th:replace="~{shop/index :: shoppingCart}"></div>
 <script src="../addToCart.js"></script>
 <script src="../global_util.js"></script>
 </body>

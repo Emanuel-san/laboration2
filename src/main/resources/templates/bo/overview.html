@@ -4,12 +4,16 @@
     <title>Webshop</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../webshop.css">
+    <link rel="stylesheet" href="../backoffice.css">
 </head>
 <body>
 <div id="header">Webshop Backoffice</div>
 <div id="info-main">
-    <p>BACKOFFICE</p>
+    <th:block th:if="${templateName != null && selector != null}">
+        <div th:replace="~{${templateName} :: ${selector}}"></div>
+    </th:block>
+    <p th:unless="${templateName != null && selector != null}">BACKOFFICE</p>
 </div>
+    <div th:replace="~{bo/fragments/constants :: backofficeMenu}"></div>
 </body>
-</html>>
+</html>

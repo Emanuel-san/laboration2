@@ -3,7 +3,7 @@ body {
     flex-direction: column;
     height: 100vh; /* Viewport height, ensuring full height of the page */
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #ff6a00, #ee0979); /* Gradient from orange to pink */
+    background: linear-gradient(to right, #2c3e50, #bdc3c7, #86a8e7, #2F80ED);
 }
 #header, #info-main {
     width: calc(100% - 210px); /* Deducting the width of the shopping cart */
@@ -33,7 +33,7 @@ body {
     border-radius: 8px; /* Rounded corners */
     position: relative; /* Establishes a positioning context for the shoppingCart div */
     background: white;
-    color: black; /* Text color */
+    color: black;
 }
 #store-front {
     display: grid;
@@ -50,6 +50,7 @@ body {
     height: 100vh; /* Makes it full height */
     width: 200px; /* Adjust width as per requirement */
     background: white;
+    color: black;
 }
 .product-detail {
     display: grid;

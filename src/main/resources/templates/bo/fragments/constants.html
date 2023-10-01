@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div th:fragment="backofficeMenu" id="bo-menu">
+    <p>Products</p>
+    <p>Shopping Carts</p>
+    <p>Users</p>
+    <a th:href="@{/backoffice(fragment=DELETE_USER)}">Delete user</a>
+    <a th:href="@{/backoffice(fragment=USER_ROLE)}">Change user role</a>
+</div>
+</body>
+</html>

@@ -6,23 +6,21 @@ import lab2.webshop.controllers.ShoppingCartController;
 import lab2.webshop.controllers.UsersController;
 import lab2.webshop.openapi.model.*;
 import lab2.webshop.services.WebshopFacade;
-import lab2.webshop.util.Authorities;
-import lab2.webshop.util.WebshopModelMapper;
+import lab2.webshop.util.WebshopMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class WebshopFacadeImpl implements WebshopFacade {
-    final ProductController productController;
-    final ShoppingCartController shoppingCartController;
-    final OrderController orderController;
-    final UsersController usersController;
+    private final ProductController productController;
+    private final ShoppingCartController shoppingCartController;
+    private final OrderController orderController;
+    private final UsersController usersController;
 
     @Autowired
     public WebshopFacadeImpl(final ProductController productController,
@@ -49,33 +47,32 @@ public class WebshopFacadeImpl implements WebshopFacade {
     public ShoppingCart getShoppingCart(final String sessionId) {
         final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
         final ShoppingCartEntity shoppingCartEntity = response.getBody();
-        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
+        return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
     public ShoppingCart addToCart(final String productId, final String sessionId) {
         final ProductEntity productEntity = productController.getProduct(productId).getBody();
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(sessionId, productEntity).getBody();
-        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
+        return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
     public ShoppingCart deleteFromCart(final String productId, final String sessionId) {
         final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
-        return WebshopModelMapper.mapFromCartEntity(shoppingCartEntity);
+        return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
     @Override
     public User getUser(OAuth2User principal) {
         if(principal instanceof DefaultOidcUser user){
-            User shopUser = WebshopModelMapper.mapUserFromOidc(user);
-            ResponseEntity<User> response = usersController.getUser(shopUser.getProvider(), shopUser.getEmail());
+            ResponseEntity<User> response = usersController.getUser(WebshopMapper.getProvider(user), user.getEmail());
             return response.getBody();
         }
         return null;
     }
     @Override
-    public User addUserOnFirstLogin(DefaultOidcUser user) {
-        User shopUser = WebshopModelMapper.mapUserFromOidc(user);
+    public User isFirstTimeLogin(DefaultOidcUser user) {
+        User shopUser = WebshopMapper.mapUserFromOidc(user);
         ResponseEntity<User> response = usersController.getUser(shopUser.getProvider(), shopUser.getEmail());
         return response
                 .getStatusCode()

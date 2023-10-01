@@ -1,6 +1,5 @@
 package lab2.webshop.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.openapi.model.User;
@@ -8,7 +7,6 @@ import lab2.webshop.services.WebshopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -77,11 +75,16 @@ public class WebshopController {
         return ResponseEntity.ok(response);
     }
     private void addCommonAttributes(Model model, HttpSession session, OAuth2User principal) {
-        User user = webshopFacade.getUser(principal);
-        model.addAttribute(USER_AUTHENTICATED, user != null);
+        boolean authenticated = false;
+        User user = null;
+        if(principal instanceof DefaultOidcUser oidcUser) {
+            user = webshopFacade.getUser(oidcUser);
+        }
         if(user != null) {
+            authenticated = true;
             model.addAttribute("user", user);
         }
+        model.addAttribute(USER_AUTHENTICATED, authenticated);
         final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("sessionId", session.getId());

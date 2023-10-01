@@ -15,5 +15,5 @@ public interface WebshopFacade {
     ShoppingCart addToCart(String productId, String sessionId);
     ShoppingCart deleteFromCart(String productId, String sessionId);
     User getUser(OAuth2User principal);
-    User addUserOnFirstLogin(DefaultOidcUser user);
+    User isFirstTimeLogin(DefaultOidcUser user);
 }

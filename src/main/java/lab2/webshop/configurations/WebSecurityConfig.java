@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private CustomOidcUserService customOidcUserService;
+    private final CustomOidcUserService customOidcUserService;
     @Autowired
     public WebSecurityConfig(CustomOidcUserService customOidcUserService){
         this.customOidcUserService = customOidcUserService;
@@ -21,6 +21,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/backoffice/**").hasRole("SHOP_ADMIN")
                         .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/page/login")

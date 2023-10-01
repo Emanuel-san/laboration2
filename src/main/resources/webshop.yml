@@ -353,6 +353,9 @@ components:
     Provider:
       enum: [GOOGLE, LOCAL]
       type: string
+    Role:
+      enum: [SHOP_USER, SHOP_ADMIN]
+      type: string
     User:
       type: object
       x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"users\")"
@@ -360,6 +363,8 @@ components:
       properties:
         provider:
           $ref: '#/components/schemas/Provider'
+        role:
+          $ref: '#/components/schemas/Role'
         firstname:
           type: string
         lastname:

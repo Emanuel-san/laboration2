@@ -27,10 +27,9 @@ public class CustomOidcUserService extends OidcUserService {
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws UsernameNotFoundException {
         OidcUser defaultOidcUser = super.loadUser(userRequest);
-        User user = webshopFacade.addUserOnFirstLogin((DefaultOidcUser) defaultOidcUser);
+        User user = webshopFacade.isFirstTimeLogin((DefaultOidcUser) defaultOidcUser);
         Collection<GrantedAuthority> authorities = new ArrayList<>(defaultOidcUser.getAuthorities());
-        authorities.add(new SimpleGrantedAuthority("ROLE_CUSTOM"));
-        OidcUser customOidcUser = new DefaultOidcUser(authorities, defaultOidcUser.getIdToken(), defaultOidcUser.getUserInfo());
-        return defaultOidcUser;
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getValue()));
+        return new DefaultOidcUser(authorities, defaultOidcUser.getIdToken(), defaultOidcUser.getUserInfo());
     }
 }

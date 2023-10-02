@@ -2,8 +2,10 @@ package lab2.webshop.util;
 
 public enum BackofficeFragments {
     DELETE_USER("bo/fragments/user_fragments", "deleteUser"),
-    USER_ROLE("bo/fragments/user_fragments", "userRole");
-
+    USER_ROLE("bo/fragments/user_fragments", "userRole"),
+    ADD_PRODUCT("bo/fragments/product_fragments", "addProduct"),
+    DELETE_PRODUCT("bo/fragments/product_fragments", "deleteProduct"),
+    EDIT_PRODUCT("bo/fragments/product_fragments", "editProduct");
     private final String templateName;
     private final String selector;
 

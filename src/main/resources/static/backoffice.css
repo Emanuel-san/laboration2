@@ -44,3 +44,11 @@ body {
     background: #8e8ea0;
     color: white;
 }
+#bo-menu a {
+    color: inherit; /* Anchor tags inside #bo-menu will inherit color from #bo-menu */
+    text-decoration: none; /* Removes the underline from the links, optional but commonly used */
+}
+.bo-menu-title {
+    background: #2c3e50;
+    padding: 10px;
+}

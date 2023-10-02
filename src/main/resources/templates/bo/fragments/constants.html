@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 <div th:fragment="backofficeMenu" id="bo-menu">
-    <p>Products</p>
-    <p>Shopping Carts</p>
-    <p>Users</p>
-    <a th:href="@{/backoffice(fragment=DELETE_USER)}">Delete user</a>
-    <a th:href="@{/backoffice(fragment=USER_ROLE)}">Change user role</a>
+    <p class="bo-menu-title">Products</p>
+        <a th:href="@{/backoffice(fragment=ADD_PRODUCT)}">Add product</a><br />
+        <a th:href="@{/backoffice(fragment=DELETE_PRODUCT)}">Delete product</a><br />
+        <a th:href="@{/backoffice(fragment=EDIT_PRODUCT)}">Edit product</a>
+    <p class="menu-title">Shopping Carts</p>
+    <p class="menu-title">Users</p>
+        <a class="bo-menu-link" th:href="@{/backoffice(fragment=DELETE_USER)}">Delete user</a><br />
+        <a class="bo-menu-link" th:href="@{/backoffice(fragment=USER_ROLE)}">Change user role</a>
 </div>
 </body>
 </html>

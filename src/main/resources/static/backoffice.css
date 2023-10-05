@@ -47,8 +47,25 @@ body {
 #bo-menu a {
     color: inherit; /* Anchor tags inside #bo-menu will inherit color from #bo-menu */
     text-decoration: none; /* Removes the underline from the links, optional but commonly used */
+    transition: color 0.3s ease;
+}
+#bo-menu a:hover {
+    color: #2c3e50;
 }
 .bo-menu-title {
     background: #2c3e50;
     padding: 10px;
+}
+.bo-product-main {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.bo-product-form {
+    flex: 1;
+    padding: 20px;
+}
+.result {
+    padding: 20px;
+    flex: 2;
 }

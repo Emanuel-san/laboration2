@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
-  <div th:fragment="addProduct">
-    <p>ADD PRODUCT</p>
+<!-- Fragment template for adding a new product -->
+  <div th:fragment="addProduct" class="bo-product-main">
+    <div class="bo-product-form">
+      <form action="/backoffice/products?fragment=ADD_PRODUCT" content="application/json" method="post">
+        <label for="productId">Product ID:</label><br>
+        <input type="text" id="productId" name="productId" required><br>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="price">Price:</label><br>
+        <input type="number" step="0.01" id="price" name="price" required><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="image">Image URL (optional):</label><br>
+        <input type="url" id="image" name="image"><br><br>
+
+        <input type="submit" value="Save">
+      </form>
+    </div>
+    <div th:if="${success != null}" class="result">
+      <div th:if="${success}">
+        <p>Product successfully added</p>
+        <p th:text="'Product ID: ' + ${addedProduct.getProductId()}" />
+        <p th:text="'Name: ' + ${addedProduct.getName()}"></p>
+        <p th:text="'Price: ' + ${addedProduct.getPrice()}" />
+        <p th:text="'Descriptioin: ' + ${addedProduct.getDescription()}" />
+        <p th:text="'Image URL: ' + ${addedProduct.getImage()}" />
+      </div>
+      <p th:unless="${success}">Something went wrong while adding the product to database</p>
+    </div>
   </div>
+<!-- Fragment template for deleting a new product -->
   <div th:fragment="deleteProduct">
     <p>DELETE PRODUCT</p>
   </div>
+<!-- Fragment template for editing a new product -->
   <div th:fragment="editProduct">
     <p>EDIT PRODUCT</p>
   </div>

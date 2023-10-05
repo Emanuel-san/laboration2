@@ -33,6 +33,5 @@ final public class WebshopMapper {
             return Provider.GOOGLE;
         }
         return Provider.LOCAL;
-
     }
 }

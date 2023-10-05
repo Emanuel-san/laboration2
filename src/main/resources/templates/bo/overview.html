@@ -14,6 +14,7 @@
     </th:block>
     <p th:unless="${templateName != null && selector != null}">BACKOFFICE</p>
 </div>
-    <div th:replace="~{bo/fragments/constants :: backofficeMenu}"></div>
+    <!-- Backoffice menu -->
+    <div th:replace="~{bo/fragments/bo_menu :: backofficeMenu}"></div>
 </body>
 </html>

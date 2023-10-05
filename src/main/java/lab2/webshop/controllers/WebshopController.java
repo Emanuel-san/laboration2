@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Front end controller
+ * Webshop front end controller
  */
 @Controller
 public class WebshopController {

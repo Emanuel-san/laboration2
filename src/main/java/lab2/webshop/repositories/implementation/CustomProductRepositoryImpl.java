@@ -31,7 +31,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     public void updateProduct(final String productId, final Product product) {
         final Query query = new Query(Criteria.where("productId").is(productId));
         final Update update = new Update();
-        final Map<String, Object> fieldsToUpdate = mapObjectFields(product);
+        final Map<String, Object> fieldsToUpdate = mapProductFields(product);
         keyCounter = 0;
         fieldsToUpdate.forEach((key, value) -> {
             if (value != null) {
@@ -53,7 +53,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
      * @param product contains product fields to update.
      * @return mapped product fields.
      */
-    private Map<String, Object> mapObjectFields(final Product product){
+    private Map<String, Object> mapProductFields(final Product product){
         final Map<String, Object> objectFields = new HashMap<>();
         objectFields.put("name", product.getName());
         objectFields.put("price", product.getPrice());

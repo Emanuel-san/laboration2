@@ -19,4 +19,9 @@ public class BackofficeFacadeImpl implements BackofficeFacade {
         ResponseEntity<ProductEntity> response = productController.createProduct(productToAdd);
         return response.getBody();
     }
+
+    @Override
+    public ProductEntity getProduct(String productId) {
+        return productController.getProduct(productId).getBody();
+    }
 }

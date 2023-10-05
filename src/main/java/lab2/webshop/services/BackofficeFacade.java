@@ -5,4 +5,5 @@ import lab2.webshop.openapi.model.ProductEntity;
 public interface BackofficeFacade {
 
     ProductEntity addProduct(ProductEntity productToAdd);
+    ProductEntity getProduct(String productId);
 }

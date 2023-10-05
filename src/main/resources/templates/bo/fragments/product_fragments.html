@@ -4,7 +4,7 @@
 <!-- Fragment template for adding a new product -->
   <div th:fragment="addProduct" class="bo-product-main">
     <div class="bo-product-form">
-      <form action="/backoffice/products?fragment=ADD_PRODUCT" content="application/json" method="post">
+      <form action="/backoffice/products/ADD_PRODUCT" content="application/json" method="post">
         <label for="productId">Product ID:</label><br>
         <input type="text" id="productId" name="productId" required><br>
 
@@ -35,13 +35,17 @@
       <p th:unless="${success}">Something went wrong while adding the product to database</p>
     </div>
   </div>
-<!-- Fragment template for deleting a new product -->
+<!-- Fragment template for deleting a product -->
   <div th:fragment="deleteProduct">
     <p>DELETE PRODUCT</p>
   </div>
-<!-- Fragment template for editing a new product -->
+<!-- Fragment template for editing a product -->
   <div th:fragment="editProduct">
-    <p>EDIT PRODUCT</p>
+    <form action="/backoffice/products/EDIT_PRODUCT" method="get">
+      <label for="productId">Find product by id:</label>
+      <input type="text" name="productId" required>
+      <button type="submit">Find product</button>
+    </form>
   </div>
 </body>
 </html>

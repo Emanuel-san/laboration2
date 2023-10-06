@@ -7,7 +7,10 @@
     <link rel="stylesheet" th:href="@{/backoffice.css}">
 </head>
 <body>
-<div id="header">Webshop Backoffice</div>
+<div id="header">
+    Webshop Backoffice
+    <a href="/">Back to shop</a>
+</div>
 <div id="info-main">
     <th:block th:if="${templateName != null && selector != null}">
         <div th:replace="~{${templateName} :: ${selector}}"></div>

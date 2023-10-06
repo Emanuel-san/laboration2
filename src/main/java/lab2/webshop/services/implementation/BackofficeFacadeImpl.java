@@ -1,6 +1,7 @@
 package lab2.webshop.services.implementation;
 
 import lab2.webshop.controllers.ProductController;
+import lab2.webshop.openapi.model.Product;
 import lab2.webshop.openapi.model.ProductEntity;
 import lab2.webshop.services.BackofficeFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,16 @@ public class BackofficeFacadeImpl implements BackofficeFacade {
     @Override
     public ProductEntity getProduct(String productId) {
         return productController.getProduct(productId).getBody();
+    }
+
+    @Override
+    public ProductEntity updateProduct(ProductEntity productEntity) {
+        Product product = Product.builder()
+                .name(productEntity.getName())
+                .price(productEntity.getPrice())
+                .description(productEntity.getDescription())
+                .image(productEntity.getImage())
+                .build();
+        return productController.updateProduct(productEntity.getProductId(), product).getBody();
     }
 }

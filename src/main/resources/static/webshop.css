@@ -52,6 +52,12 @@ body {
     background: white;
     color: black;
 }
+#login-options {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100%; /* Take up full height of the parent */
+}
 .product-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;

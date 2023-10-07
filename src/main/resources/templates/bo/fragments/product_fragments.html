@@ -36,7 +36,7 @@
     </div>
   </div>
 <!-- Fragment template for deleting a product -->
-  <div th:fragment="deleteProduct">
+  <div th:fragment="deleteProduct" id="delete-product">
     <form action="/backoffice/products/DELETE_PRODUCT" method="get">
       <label for="productId">Find product by id:</label>
       <input type="text" name="productId" required>
@@ -48,7 +48,9 @@
       <p th:text="'Price: ' + ${searchedProduct.getPrice()}" />
       <p th:text="'Descriptioin: ' + ${searchedProduct.getDescription()}" />
       <p th:text="'Image URL: ' + ${searchedProduct.getImage()}" />
+      <button id="deleteProductBtn" th:data-product-id="${searchedProduct.getProductId()}">Remove</button>
     </div>
+    <script src="/bo_delete_product.js"></script>
   </div>
 <!-- Fragment template for editing a product -->
   <div th:fragment="editProduct" id="edit-product">
@@ -77,7 +79,7 @@
         <input type="submit" id="updateProductBtn" value="Save">
       </form>
     </div>
-    <script src="/edit_product.js"></script>
+    <script src="/bo_edit_product.js"></script>
   </div>
 </body>
 </html>

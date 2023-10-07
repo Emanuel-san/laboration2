@@ -36,4 +36,9 @@ public class BackofficeFacadeImpl implements BackofficeFacade {
                 .build();
         return productController.updateProduct(productEntity.getProductId(), product).getBody();
     }
+
+    @Override
+    public ProductEntity deleteProduct(String productId) {
+        return productController.deleteProduct(productId).getBody();
+    }
 }

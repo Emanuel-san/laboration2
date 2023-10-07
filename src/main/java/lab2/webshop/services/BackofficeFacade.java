@@ -7,4 +7,5 @@ public interface BackofficeFacade {
     ProductEntity addProduct(ProductEntity productToAdd);
     ProductEntity getProduct(String productId);
     ProductEntity updateProduct(ProductEntity productEntity);
+    ProductEntity deleteProduct(String productId);
 }

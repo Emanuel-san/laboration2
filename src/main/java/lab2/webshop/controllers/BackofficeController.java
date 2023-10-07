@@ -53,6 +53,22 @@ public class BackofficeController {
         }
         return ResponseEntity.ok(response);
     }
+    @DeleteMapping(value = "/backoffice/products/{fragment}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable BackofficeFragments fragment,
+                                                    @RequestParam String productId,
+                                                    Model model) {
+        setFragment(model, fragment);
+        ProductEntity updatedProduct = backofficeFacade.deleteProduct(productId);
+        Map<String, Object> response = new HashMap<>();
+        if(updatedProduct != null) {
+            response.put("success", true);
+        }
+        else {
+            response.put("success", false);
+        }
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping(value = "/backoffice/products/{fragment}")
     public String getProduct(@PathVariable BackofficeFragments fragment, @RequestParam String productId, Model model) {

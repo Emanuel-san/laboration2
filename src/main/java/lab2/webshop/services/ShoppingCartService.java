@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface ShoppingCartService {
 
-    ShoppingCartEntity createShoppingCart(String sessionId);
-    ShoppingCartEntity getShoppingCart(String sessionId);
+    ShoppingCartEntity createShoppingCart(String cartId);
+    ShoppingCartEntity getShoppingCart(String cartId);
     List<CartSummary> getShoppingCarts();
     CartSummary updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart);
-    ShoppingCartEntity addProductToCart(ProductEntity productEntity, String session);
-    ShoppingCartEntity deleteFromShoppingCart(String productId, String sessionId);
+    ShoppingCartEntity addProductToCart(ProductEntity productEntity, String cartId);
+    ShoppingCartEntity deleteFromShoppingCart(String productId, String cartId);
 }

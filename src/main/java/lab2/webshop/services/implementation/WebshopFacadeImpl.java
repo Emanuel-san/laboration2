@@ -44,22 +44,22 @@ public class WebshopFacadeImpl implements WebshopFacade {
     }
 
     @Override
-    public ShoppingCart getShoppingCart(final String sessionId) {
-        final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(sessionId);
+    public ShoppingCart getShoppingCart(final String cartId) {
+        final ResponseEntity<ShoppingCartEntity> response = shoppingCartController.getShoppingCart(cartId);
         final ShoppingCartEntity shoppingCartEntity = response.getBody();
         return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
-    public ShoppingCart addToCart(final String productId, final String sessionId) {
+    public ShoppingCart addToCart(final String productId, final String cartId) {
         final ProductEntity productEntity = productController.getProduct(productId).getBody();
-        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(sessionId, productEntity).getBody();
+        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.addToShoppingCart(cartId, productEntity).getBody();
         return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
 
     @Override
-    public ShoppingCart deleteFromCart(final String productId, final String sessionId) {
-        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,sessionId).getBody();
+    public ShoppingCart deleteFromCart(final String productId, final String cartId) {
+        final ShoppingCartEntity shoppingCartEntity = shoppingCartController.deleteFromShoppingCart(productId,cartId).getBody();
         return WebshopMapper.mapFromCartEntity(shoppingCartEntity);
     }
     @Override

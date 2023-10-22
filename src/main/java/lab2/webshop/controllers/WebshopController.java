@@ -1,5 +1,7 @@
 package lab2.webshop.controllers;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lab2.webshop.openapi.model.ShoppingCart;
 import lab2.webshop.openapi.model.User;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Webshop front end controller
@@ -35,38 +38,47 @@ public class WebshopController {
     }
 
     @GetMapping ("/")
-    public String home(final Model model, final HttpSession session, @AuthenticationPrincipal OAuth2User principal){
-        addCommonAttributes(model, session, principal);
+    public String home(@CookieValue(value="cartId", defaultValue = "none") String cartId,
+                       final Model model,
+                       @AuthenticationPrincipal OAuth2User principal,
+                       HttpServletResponse response) {
+        addCommonAttributes(model, response, principal, cartId);
         return "shop/index";
     }
     @GetMapping("/page/list")
     public String list(@RequestParam(name="search", required = false)String name,
-                        Model model,
-                        HttpSession session,
-                        @AuthenticationPrincipal OAuth2User principal) {
-        addCommonAttributes(model, session, principal);
+                       @CookieValue(value="cartId", defaultValue = "none") String cartId,
+                       HttpServletResponse response,
+                       Model model,
+                       @AuthenticationPrincipal OAuth2User principal) {
+        addCommonAttributes(model, response, principal, cartId);
         model.addAttribute("products", webshopFacade.getAllProducts());
         return "shop/list";
     }
     @GetMapping("/page/products")
     public String showProduct(@RequestParam(name=PRODUCT_IDENTIFIER_ATTRIBUTE) String productId,
+                              @CookieValue(value="cartId", defaultValue = "none") String cartId,
+                              HttpServletResponse response,
                               Model model,
-                              HttpSession session,
                               @AuthenticationPrincipal OAuth2User principal) {
-        addCommonAttributes(model, session, principal);
+        addCommonAttributes(model, response, principal, cartId);
         model.addAttribute(PRODUCT_IDENTIFIER_ATTRIBUTE, productId);
         model.addAttribute("product", webshopFacade.getOneProduct(productId));
         return "shop/product";
     }
     @GetMapping("/page/login")
-    public String login(HttpSession session, Model model, @AuthenticationPrincipal OAuth2User principal){
-        addCommonAttributes(model, session, principal);
+    public String login(Model model,
+                        @AuthenticationPrincipal OAuth2User principal,
+                        @CookieValue(value="cartId", defaultValue = "none") String cartId,
+                        HttpServletResponse response){
+        addCommonAttributes(model, response, principal, cartId);
         return "shop/login";
     }
     @PutMapping("/shopping-cart/add-to-cart")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload, HttpSession session){
-        final ShoppingCart cart = webshopFacade.addToCart(payload.get(PRODUCT_IDENTIFIER_ATTRIBUTE), session.getId());
+    public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, String> payload,
+                                                         @CookieValue(value="cartId", defaultValue = "none") String cartId){
+        final ShoppingCart cart = webshopFacade.addToCart(payload.get(PRODUCT_IDENTIFIER_ATTRIBUTE), cartId);
         Map<String, Object> response = new HashMap<>();
         response.put("success", !cart.getProductItems().isEmpty());
         response.put(CART_ITEMS_LIST_ATTRIBUTE, cart.getProductItems());
@@ -74,13 +86,14 @@ public class WebshopController {
     }
     @DeleteMapping("/shopping-cart/delete-from-cart")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> deleteFromCart(@RequestParam String productId, HttpSession session) {
-        final ShoppingCart cart = webshopFacade.deleteFromCart(productId, session.getId());
+    public ResponseEntity<Map<String, Object>> deleteFromCart(@RequestParam String productId,
+                                                              @CookieValue(value="cartId", defaultValue = "none") String cartId) {
+        final ShoppingCart cart = webshopFacade.deleteFromCart(productId, cartId);
         Map<String, Object> response = new HashMap<>();
         response.put(CART_ITEMS_LIST_ATTRIBUTE, cart.getProductItems());
         return ResponseEntity.ok(response);
     }
-    private void addCommonAttributes(Model model, HttpSession session, OAuth2User principal) {
+    private void addCommonAttributes(Model model, HttpServletResponse response, OAuth2User principal, String cartId) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean authenticated = false;
         User user = null;
@@ -93,11 +106,18 @@ public class WebshopController {
             model.addAttribute("isAdmin", isAdmin(authentication));
         }
         model.addAttribute(USER_AUTHENTICATED, authenticated);
-        final ShoppingCart cart = webshopFacade.getShoppingCart(session.getId());
+        final ShoppingCart cart = webshopFacade.getShoppingCart(hasCart(cartId, response));
         model.addAttribute(CART_OBJECT_ATTRIBUTE, cart);
-        model.addAttribute("sessionId", session.getId());
     }
 
+    private String hasCart(String cartId, HttpServletResponse response) {
+        if(cartId.equals("none")) {
+            cartId = UUID.randomUUID().toString();
+            Cookie cookie = new Cookie("cartId", cartId);
+            response.addCookie(cookie);
+        }
+        return cartId;
+    }
     private boolean isAdmin(final Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
             return authentication.getAuthorities()

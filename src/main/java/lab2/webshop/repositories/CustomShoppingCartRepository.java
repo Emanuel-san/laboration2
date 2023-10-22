@@ -12,9 +12,9 @@ public interface CustomShoppingCartRepository {
     /**
      * Push an item to a shopping cart.
      * @param item represents a product in the cart
-     * @param sessionId session connected to a cart
+     * @param cartId cart id.
      * @return {@link ShoppingCartEntity}
      */
-    ShoppingCartEntity pushCartItem(CartItem item, String sessionId);
-    ShoppingCartEntity removeCartItem(String productId, String sessionId);
+    ShoppingCartEntity pushCartItem(CartItem item, String cartId);
+    ShoppingCartEntity removeCartItem(String productId, String cartId);
 }

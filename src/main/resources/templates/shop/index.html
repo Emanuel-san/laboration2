@@ -9,7 +9,6 @@
   <body>
     <div th:fragment="header" id="header">
       <p>Webshop</p>
-      <p th:text="${sessionId}"></p>
       <form th:if="${!authenticated}" action="/page/login" method="GET">
         <button type="submit">Login</button>
       </form>

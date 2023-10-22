@@ -137,7 +137,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   ###################### /shopping-carts
-  /shopping-carts/{session-id}:
+  /shopping-carts/{cart-id}:
     get:
       tags:
         - Shopping-Carts
@@ -145,7 +145,7 @@ paths:
       summary: Retrieve a specific shopping cart
       parameters:
         - in: path
-          name: session-id
+          name: cart-id
           schema:
             type: string
           required: true
@@ -169,7 +169,7 @@ paths:
       summary: Create a new shopping cart
       parameters:
         - in: path
-          name: session-id
+          name: cart-id
           schema:
             type: string
           required: true
@@ -194,7 +194,7 @@ paths:
         required: true
       parameters:
         - in: query
-          name: session-id
+          name: cart-id
           schema:
             type: string
           required: true
@@ -217,7 +217,7 @@ paths:
             type: string
           required: true
         - in: query
-          name: session-id
+          name: cart-id
           schema:
             type: string
           required: true
@@ -415,9 +415,9 @@ components:
       x-class-extra-annotation: "@org.springframework.data.mongodb.core.mapping.Document(\"carts\")"
       description: Representation of a Shopping-cart resource
       required:
-        - sessionId
+        - cartId
       properties:
-        sessionId:
+        cartId:
           nullable: false
           type: string
         customerId:

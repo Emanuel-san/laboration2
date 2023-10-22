@@ -11,9 +11,9 @@ import java.util.List;
 public interface WebshopFacade {
     List<ProductEntity> getAllProducts();
     ProductEntity getOneProduct(String productId);
-    ShoppingCart getShoppingCart(String sessionId);
-    ShoppingCart addToCart(String productId, String sessionId);
-    ShoppingCart deleteFromCart(String productId, String sessionId);
+    ShoppingCart getShoppingCart(String cartId);
+    ShoppingCart addToCart(String productId, String cartId);
+    ShoppingCart deleteFromCart(String productId, String cartId);
     User getUser(OAuth2User principal);
     User isFirstTimeLogin(DefaultOidcUser user);
 }

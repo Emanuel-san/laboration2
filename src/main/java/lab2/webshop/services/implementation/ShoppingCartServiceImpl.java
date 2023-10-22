@@ -22,19 +22,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartEntity createShoppingCart(String sessionId) {
-        final ShoppingCartEntity newCart = new ShoppingCartEntity(sessionId);
+    public ShoppingCartEntity createShoppingCart(String cartId) {
+        final ShoppingCartEntity newCart = new ShoppingCartEntity(cartId);
         newCart.setProductItems(new ArrayList<>());
         shoppingCartRepository.insert(newCart);
         return newCart;
     }
 
     @Override
-    public ShoppingCartEntity getShoppingCart(String sessionId) {
-        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.findCartBySessionId(sessionId);
+    public ShoppingCartEntity getShoppingCart(String cartId) {
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.findCartByCartId(cartId);
         if(shoppingCartEntity == null) {
             // Was not able to find a cart associated to the session id, create a new one.
-            shoppingCartEntity = createShoppingCart(sessionId);
+            shoppingCartEntity = createShoppingCart(cartId);
         }
         return shoppingCartEntity;
     }
@@ -52,7 +52,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartEntity addProductToCart(ProductEntity productEntity, String sessionId) {
+    public ShoppingCartEntity addProductToCart(ProductEntity productEntity, String cartId) {
         CartItem newItem = new CartItem(productEntity.getProductId());
         Product product = Product.builder()
                 .name(productEntity.getName())
@@ -62,16 +62,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .build();
         newItem.setQuantity(new BigDecimal(1));
         newItem.setProduct(product);
-        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, sessionId);
+        ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, cartId);
         if(shoppingCartEntity == null){
             // Was not able to find a cart associated to the session id, create a new one.
-            shoppingCartEntity = createShoppingCart(sessionId);
+            shoppingCartEntity = createShoppingCart(cartId);
         }
         return shoppingCartEntity;
     }
 
     @Override
-    public ShoppingCartEntity deleteFromShoppingCart(String productId, String sessionId) {
-        return shoppingCartRepository.removeCartItem(productId, sessionId);
+    public ShoppingCartEntity deleteFromShoppingCart(String productId, String cartId) {
+        return shoppingCartRepository.removeCartItem(productId, cartId);
     }
 }

@@ -22,24 +22,24 @@ public class CustomShoppingCartRepositoryImpl implements CustomShoppingCartRepos
         this.mongoTemplate = template;
     }
     @Override
-    public ShoppingCartEntity pushCartItem(CartItem item, String sessionId) {
+    public ShoppingCartEntity pushCartItem(CartItem item, String cartId) {
         // Query to select shopping cart with matching session id push to document if product id does not already exist.
         Query query = new Query(
-                Criteria.where("sessionId")
-                        .is(sessionId)
+                Criteria.where("cartId")
+                        .is(cartId)
                         .and("productItems.productId")
                         .ne(item.getProductId()));
         Update update = new Update().push("productItems", item);
         ShoppingCartEntity shoppingCartEntity = mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true), ShoppingCartEntity.class);
         if(shoppingCartEntity == null) {
-            shoppingCartEntity = mongoTemplate.findOne(new Query(Criteria.where("sessionId").is(sessionId)), ShoppingCartEntity.class);
+            shoppingCartEntity = mongoTemplate.findOne(new Query(Criteria.where("cartId").is(cartId)), ShoppingCartEntity.class);
         }
         return shoppingCartEntity;
     }
 
     @Override
-    public ShoppingCartEntity removeCartItem(String productId, String sessionId) {
-        Query query = new Query(Criteria.where("sessionId").is(sessionId));
+    public ShoppingCartEntity removeCartItem(String productId, String cartId) {
+        Query query = new Query(Criteria.where("cartId").is(cartId));
         Update update = new Update().pull("productItems", new BasicDBObject("productId", productId));
         return mongoTemplate.findAndModify(query, update, FindAndModifyOptions.options().returnNew(true), ShoppingCartEntity.class);
     }

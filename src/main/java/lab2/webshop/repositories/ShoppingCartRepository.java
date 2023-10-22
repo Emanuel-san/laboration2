@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 public interface ShoppingCartRepository extends MongoRepository<ShoppingCartEntity, String>, CustomShoppingCartRepository {
 
     /**
-     * Fetch a shopping cart by sessionId.
-     * @param sessionId current session id.
+     * Fetch a shopping cart by cart id.
+     * @param cartId cart id.
      * @return {@link ShoppingCartEntity}
      */
-    @Query("{sessionId:'?0'}")
-    ShoppingCartEntity findCartBySessionId(final String sessionId);
+    @Query("{cartId:'?0'}")
+    ShoppingCartEntity findCartByCartId(final String cartId);
 }

@@ -18,19 +18,19 @@ public class ShoppingCartController implements ShoppingCartsApi {
         this.shoppingCartService = shoppingCartService;
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> createShoppingCart(String sessionId) {
-        return ResponseEntity.ok(shoppingCartService.createShoppingCart(sessionId));
+    public ResponseEntity<ShoppingCartEntity> createShoppingCart(String cartId) {
+        return ResponseEntity.ok(shoppingCartService.createShoppingCart(cartId));
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> getShoppingCart(String sessionId) {
-        return ResponseEntity.ok(shoppingCartService.getShoppingCart(sessionId));
+    public ResponseEntity<ShoppingCartEntity> getShoppingCart(String cartId) {
+        return ResponseEntity.ok(shoppingCartService.getShoppingCart(cartId));
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> addToShoppingCart(String sessionId, ProductEntity productEntity) {
-        return ResponseEntity.ok(shoppingCartService.addProductToCart(productEntity, sessionId));
+    public ResponseEntity<ShoppingCartEntity> addToShoppingCart(String cartId, ProductEntity productEntity) {
+        return ResponseEntity.ok(shoppingCartService.addProductToCart(productEntity, cartId));
     }
     @Override
-    public ResponseEntity<ShoppingCartEntity> deleteFromShoppingCart(String productId, String sessionId){
-        return ResponseEntity.ok(shoppingCartService.deleteFromShoppingCart(productId, sessionId));
+    public ResponseEntity<ShoppingCartEntity> deleteFromShoppingCart(String productId, String cartId){
+        return ResponseEntity.ok(shoppingCartService.deleteFromShoppingCart(productId, cartId));
     }
 }

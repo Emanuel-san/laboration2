@@ -1,0 +1,50 @@
+plugins {
+    id "org.openapi.generator" version "6.6.0"
+}
+
+group = 'lab2.webshop'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':webshop-api-lib')
+}
+
+compileJava.dependsOn tasks.named("openApiGenerate")
+
+openApiGenerate {
+    generatorName.set("spring")
+    inputSpec.set("${project(':webshop-api-lib').projectDir}/src/main/resources/webshop.yml")
+    outputDir.set("$buildDir/generated")
+    apiPackage.set("lab2.webshop.openapi.api")
+    modelPackage.set("lab2.webshop.openapi.model")
+    configOptions.set([
+            'useSpringBoot3'     : 'true',
+            'interfaceOnly'      : 'true',
+            'serializableModel'  : 'true'
+    ])
+}
+sourceSets {
+    main {
+        java {
+            srcDir("$buildDir/generated/src/main/java")
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

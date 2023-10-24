@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div th:fragment="backofficeMenu" id="bo-menu">
+    <p class="bo-menu-title">Products</p>
+        <a th:href="@{/backoffice(fragment=ADD_PRODUCT)}">Add product</a><br />
+        <a th:href="@{/backoffice(fragment=DELETE_PRODUCT)}">Delete product</a><br />
+        <a th:href="@{/backoffice(fragment=EDIT_PRODUCT)}">Edit product</a>
+    <p class="bo-menu-title">Shopping Carts</p>
+    <p class="bo-menu-title">Users</p>
+        <a th:href="@{/backoffice(fragment=DELETE_USER)}">Delete user</a><br />
+        <a th:href="@{/backoffice(fragment=USER_ROLE)}">Change user role</a>
+</div>
+</body>
+</html>

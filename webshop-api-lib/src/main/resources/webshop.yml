@@ -1,9 +1,10 @@
 openapi: 3.0.1
 info:
   title: Webshop API
-  description: >
-    A simple webshop REST API for storing resources regarding products, cart contents and orders.
+  description: A simple webshop REST API for storing resources regarding products, cart contents and orders.
   version: 1.0.0
+servers:
+  - url: http://localhost:8080
 paths:
   ###################### /products
   /products:
@@ -373,7 +374,7 @@ components:
           type: string
     Product:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
+      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       description: Representation of a Product resource
       properties:
         name:

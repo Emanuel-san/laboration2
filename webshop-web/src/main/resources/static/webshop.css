@@ -1,0 +1,90 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Viewport height, ensuring full height of the page */
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #2c3e50, #bdc3c7, #86a8e7, #2F80ED);
+}
+#header, #info-main {
+    width: calc(100% - 210px); /* Deducting the width of the shopping cart */
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    color: black;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+#title, #session {
+    text-align: center;
+}
+
+#info-main {
+    display: flex;
+    flex-grow: 1; /* Takes up all remaining space after the header */
+    border-radius: 8px; /* Rounded corners */
+    position: relative; /* Establishes a positioning context for the shoppingCart div */
+    background: white;
+    color: black;
+}
+#store-front {
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* auto-fill tries to fit as many columns as possible */
+    /* minmax(200px, 1fr) means columns are at least 200px wide but can grow */
+}
+
+#shopping-cart {
+    position: fixed; /* Fixing the position of the shopping cart */
+    top: 0; /* Aligning it to the top */
+    right: 0; /* Aligning it to the far right */
+    height: 100vh; /* Makes it full height */
+    width: 200px; /* Adjust width as per requirement */
+    background: white;
+    color: black;
+}
+#login-options {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100%; /* Take up full height of the parent */
+}
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; /* Optional: Add a gap between columns for spacing */
+    align-items: center; /* Center items vertically */
+}
+.product-detail-picture {
+    width: 100%;
+    height: auto;
+    display: block;  /* Ensures no extra space below the image */
+}
+.product-display {
+    /* Set a height if you want to limit vertical size */
+    min-height: 200px; /* Maximum height*/
+    overflow: hidden; /* To ensure content inside doesn't overflow */
+}
+.product-display * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.product-picture {
+    max-height: 200px;
+    max-width: 400px;
+}
+.product-link {
+    display: block;    /* Makes the anchor a block element */
+    text-decoration: none;   /* Removes the underline */
+    color: inherit;   /* Inherits the color of the parent so the text doesn't look like a traditional link */
+}

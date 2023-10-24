@@ -1,5 +1,5 @@
 rootProject.name = 'webshop'
 include 'webshop-internal-api'
 include 'webshop-api-lib'
-include 'webshop-api-lib'
+include 'webshop-web'
 

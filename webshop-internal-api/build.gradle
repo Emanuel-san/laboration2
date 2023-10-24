@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     implementation project(':webshop-api-lib')
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.1.2'
 }
 
 compileJava.dependsOn tasks.named("openApiGenerate")

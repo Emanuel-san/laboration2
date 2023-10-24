@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Webshop</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../webshop.css">
+</head>
+<body>
+<div th:replace="~{shop/index :: header}"></div>
+<div id="info-main">
+  <div th:if="${product == null}"><p th:text="'No product found with id: ' + ${productId}"></p></div>
+  <div class="product-detail" th:if="${product != null}">
+    <div>
+      <p th:text="${product.getProductId()}" />
+      <p th:text="${product.getName()}" />
+      <p th:text="${product.getPrice()} + '€'" />
+      <p th:text="${product.getDescription()}" />
+      <button id="addToCartBtn" th:data-product-id="${product.getProductId()}">Add to cart</button>
+    </div>
+    <div>
+      <img class="product-detail-picture" th:src="${product.getImage()}" alt="No image">
+    </div>
+  </div>
+</div>
+<div th:replace="~{shop/index :: shoppingCart}"></div>
+<script src="../add_to_cart.js"></script>
+<script src="../global_util.js"></script>
+</body>
+</html>

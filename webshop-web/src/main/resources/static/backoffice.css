@@ -1,0 +1,81 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Viewport height, ensuring full height of the page */
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #2c3e50, #bdc3c7, #86a8e7, #2F80ED);
+}
+#header, #info-main {
+    width: calc(100% - 210px); /* Deducting the width of the shopping cart */
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #8e8ea0;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+#title, #session {
+    text-align: center;
+}
+
+#info-main {
+    display: flex;
+    flex-grow: 1; /* Takes up all remaining space after the header */
+    border-radius: 8px; /* Rounded corners */
+    position: relative; /* Establishes a positioning context for the shoppingCart div */
+    background: #8e8ea0;
+    color: white;
+}
+#bo-menu {
+    position: fixed; /* Fixing the position of the shopping cart */
+    top: 0; /* Aligning it to the top */
+    right: 0; /* Aligning it to the far right */
+    height: 100vh; /* Makes it full height */
+    width: 200px; /* Adjust width as per requirement */
+    background: #8e8ea0;
+    color: white;
+}
+#bo-menu a {
+    color: inherit; /* Anchor tags inside #bo-menu will inherit color from #bo-menu */
+    text-decoration: none; /* Removes the underline from the links, optional but commonly used */
+    transition: color 0.3s ease;
+}
+#bo-menu a:hover {
+    color: #2c3e50;
+}
+.bo-product-form input[type="text"],
+.bo-product-form input[type="number"],
+.bo-product-form input[type="url"] {
+    width: 300px;
+}
+
+.bo-product-form textarea {
+    width: 300px;
+    height: 100px;
+}
+.bo-menu-title {
+    background: #2c3e50;
+    padding: 10px;
+}
+.bo-product-main {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.bo-product-form {
+    flex: 1;
+    padding: 20px;
+}
+.result {
+    padding: 20px;
+    flex: 2;
+}

@@ -1,6 +1,0 @@
-#DEVELOPER PROFILE
-#This file should not be published on Github but for the purpose of the assignment it will for now.
-MONGODB_URI_FULL: mongodb+srv://lab2webshop:fb93CDRsnWoOUani@webshop.nwh0g2v.mongodb.net/?retryWrites=true&w=majority
-DATABASE_NAME: webshop
-GOOGLE_CLIENT_ID: 235868178025-9so58h3737l4jrksgnsk4677v06mhjg4.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET: 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

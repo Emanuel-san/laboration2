@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Default implementation of {@link ShoppingCartService}
+ */
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
@@ -40,18 +42,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<CartSummary> getShoppingCarts() {
-        // TODO - remove?
-        return null;
-    }
-
-    @Override
-    public CartSummary updateShoppingCart(String shoppingCartId, ShoppingCart shoppingCart) {
-        // TODO - see controller
-        return null;
-    }
-
-    @Override
     public ShoppingCartEntity addProductToCart(ProductEntity productEntity, String cartId) {
         CartItem newItem = new CartItem(productEntity.getProductId());
         Product product = Product.builder()
@@ -64,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         newItem.setProduct(product);
         ShoppingCartEntity shoppingCartEntity = shoppingCartRepository.pushCartItem(newItem, cartId);
         if(shoppingCartEntity == null){
-            // Was not able to find a cart associated to the session id, create a new one.
+            // Was not able to find a cart associated to the cart id, create a new one.
             shoppingCartEntity = createShoppingCart(cartId);
         }
         return shoppingCartEntity;

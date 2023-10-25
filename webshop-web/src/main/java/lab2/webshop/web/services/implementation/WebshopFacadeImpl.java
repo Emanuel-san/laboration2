@@ -67,6 +67,7 @@ public class WebshopFacadeImpl implements WebshopFacade {
         if(principal instanceof DefaultOidcUser user){
             return usersApi.getUser(WebshopMapper.getProvider(user), user.getEmail());
         }
+        //TODO should throw exception instead
         return null;
     }
     @Override

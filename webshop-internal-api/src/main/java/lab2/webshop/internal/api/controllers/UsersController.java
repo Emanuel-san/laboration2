@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class UsersController implements UsersApi {
-
     final UsersService usersService;
 
     @Autowired

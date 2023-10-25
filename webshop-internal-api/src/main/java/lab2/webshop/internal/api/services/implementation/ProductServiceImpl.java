@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Default implementation of {@link ProductService}
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 

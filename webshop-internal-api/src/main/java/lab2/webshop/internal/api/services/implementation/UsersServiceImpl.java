@@ -7,7 +7,9 @@ import lab2.webshop.openapi.model.Provider;
 import lab2.webshop.openapi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+/**
+ * Default implementation of {@link UsersService}
+ */
 @Service
 public class UsersServiceImpl implements UsersService {
 

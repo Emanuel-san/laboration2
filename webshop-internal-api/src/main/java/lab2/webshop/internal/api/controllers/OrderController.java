@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class OrderController implements OrdersApi {
 
-    /** Service bean for all orders related */
+    /** Service for all orders related */
     OrderService orderService;
 
     @Autowired

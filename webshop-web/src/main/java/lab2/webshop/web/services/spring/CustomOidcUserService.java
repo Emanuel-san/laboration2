@@ -24,6 +24,9 @@ public class CustomOidcUserService extends OidcUserService {
     public CustomOidcUserService(WebshopFacade webshopFacade) {
         this.webshopFacade = webshopFacade;
     }
+
+
+    /* Intercept request and add users role to authority grant. */
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws UsernameNotFoundException {
         OidcUser defaultOidcUser = super.loadUser(userRequest);

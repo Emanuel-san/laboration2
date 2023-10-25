@@ -16,5 +16,12 @@ public interface CustomShoppingCartRepository {
      * @return {@link ShoppingCartEntity}
      */
     ShoppingCartEntity pushCartItem(CartItem item, String cartId);
+
+    /**
+     * Remove an item from a cart
+     * @param productId product id
+     * @param cartId cart id
+     * @return {@link ShoppingCartEntity}
+     */
     ShoppingCartEntity removeCartItem(String productId, String cartId);
 }

@@ -4,6 +4,11 @@ import lab2.webshop.openapi.model.Order;
 
 import java.util.List;
 
+/**
+ * Service interface for orders
+ * TODO not implemented
+ */
+
 public interface OrderService {
 
     Order getOrder(String orderId);

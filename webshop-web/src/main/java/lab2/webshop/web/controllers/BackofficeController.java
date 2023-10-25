@@ -20,12 +20,18 @@ public class BackofficeController {
     public BackofficeController(BackofficeFacade backofficeFacade){
         this.backofficeFacade = backofficeFacade;
     }
+    /**
+     * Backoffice overview
+     */
     @GetMapping("/backoffice")
     public String index(@RequestParam(required = false) BackofficeFragments fragment, Model model) {
         setFragment(model, fragment);
         return "bo/overview";
     }
 
+    /**
+     * Backoffice add product overview
+     */
     @PostMapping(value = "/backoffice/products/{fragment}")
     public String add(@PathVariable BackofficeFragments fragment,
                       ProductEntity productEntity,
@@ -41,6 +47,9 @@ public class BackofficeController {
         }
         return "bo/overview";
     }
+    /**
+     * Backoffice edit product overview
+     */
     @PutMapping(value = "/backoffice/products/{fragment}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> edit(@PathVariable BackofficeFragments fragment,
@@ -54,6 +63,9 @@ public class BackofficeController {
         }
         return ResponseEntity.ok(response);
     }
+    /**
+     * Backoffice delete product overview
+     */
     @DeleteMapping(value = "/backoffice/products/{fragment}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> delete(@PathVariable BackofficeFragments fragment,

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ShoppingCartController implements ShoppingCartsApi {
 
-    /** Service bean for all shopping cart related */
+    /** Service for all shopping cart related */
     ShoppingCartService shoppingCartService;
 
     @Autowired

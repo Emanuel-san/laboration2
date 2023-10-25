@@ -6,6 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository interface for orders collection.
+ * TODO not implemented
+ */
 @Repository
 public interface OrderRepository extends MongoRepository<Order, String> {
 

@@ -9,6 +9,9 @@ buildscript {
 
 allprojects{
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
+    apply from: "${rootProject.projectDir}/dependencies.gradle"
 
     repositories {
         mavenLocal()

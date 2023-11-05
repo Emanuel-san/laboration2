@@ -1,10 +1,7 @@
 plugins {
     id "org.openapi.generator" version "6.6.0"
-    id 'java-library'
-    id 'maven-publish'
     id "org.springframework.boot" version "3.1.2"
 }
-apply from: "${rootProject.projectDir}/dependencies.gradle"
 
 group = 'lab2.webshop'
 version = '0.0.1-SNAPSHOT'
@@ -32,10 +29,6 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-annotations:'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-repositories {
-    //mavenCentral()
 }
 
 compileJava.dependsOn tasks.named("openApiGenerate")

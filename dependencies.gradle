@@ -1,0 +1,28 @@
+dependencyManagement {
+
+    def springBootVersion = '3.1.2'
+    def lombokVersion = '1.18.28'
+    def jacksonVersion = '0.2.6'
+    def springDocMvcVersion = '2.2.0'
+    def springDataMongoVersion = '4.0.3'
+    def swaggerV3CoreVersion = '2.2.18'
+    def jakartaServletVersion = '6.0.0'
+
+    dependencies {
+        dependency "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        dependency "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion"
+        dependency "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+        dependency "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+        dependency "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+        dependency "org.springframework.data:spring-data-jpa:$springBootVersion"
+        dependency "org.projectlombok:lombok:$lombokVersion"
+        dependency "org.openapitools:jackson-databind-nullable:$jacksonVersion"
+        dependency "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocMvcVersion"
+        dependency "org.springframework.data:spring-data-mongodb:$springDataMongoVersion"
+        dependency "io.swagger.core.v3:swagger-annotations:$swaggerV3CoreVersion"
+        dependency "jakarta.servlet:jakarta.servlet-api:$jakartaServletVersion"
+    }
+
+
+
+}
